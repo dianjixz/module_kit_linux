@@ -14,8 +14,10 @@ LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e
 KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE)
 
 %:
-	@ if [ "$(MAKECMDGOALS)" != "build_init" ] && [ "$(MAKECMDGOALS)" != "m5stack_AX630C_emmc_arm64_k419_defconfig" ] ; then \
-		$(MAKE) build_init ; \
+	@ if [ "$(MAKECMDGOALS)" != "build_init" ] ; then \
+		if [ "$(MAKECMDGOALS)" != "m5stack_AX630C_emmc_arm64_k419_defconfig" ] ; then \
+			$(MAKE) build_init ; \
+		fi ; \
 		[ -f '$(SRC_DIR)/drivers/soc/axera/osal/osal_all_code.o' ] || cp src_overlay/osal_all_code.o $(SRC_DIR)/drivers/soc/axera/osal/osal_all_code.o ; \
 		$(KERNEL_MAKE)  $(MAKECMDGOALS) ; \
 	fi
@@ -73,12 +75,9 @@ build/check_patch.tmp:$(PATCHES)
 	@touch build/check_patch.tmp
 
 build/check_config.tmp:$(CONFIG_FILES)
-	[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k419_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig ; }
-	[ -f '$(SRC_DIR)/.config' ] || $(KERNEL_MAKE) m5stack_AX630C_emmc_arm64_k419_defconfig
-	@ if [ ! -L '.config' ] ; then \
-		rm .config ; \
-		ln -s $(SRC_DIR)/.config .config ; \
-	fi
+	@[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k419_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig ; }
+	@[ -f '$(SRC_DIR)/.config' ] || $(KERNEL_MAKE) m5stack_AX630C_emmc_arm64_k419_defconfig
+	@[-f '.config' ] || ln -s $(SRC_DIR)/.config .config
 	@rm -f build/check_config.tmp
 	@touch build/check_config.tmp
 
