@@ -166,27 +166,25 @@
 	#size-cells = <0x0>;
 	status = "okay";
 
-	// pi4io: gpio@43 {
-	// 	compatible = "pericom,pi4ioe5v6408";
-	// 	reg = <0x43>;
-	// 	gpio-controller;
-	// 	#gpio-cells = <2>;
-	// 	// interrupts = <12 IRQ_TYPE_LEVEL_LOW>;
-	// 	irq-gpios = <&ax_gpio0 4 GPIO_ACTIVE_LOW>;
-	// 	interrupt-parent = <&ax_gpio0>;
-	// 	pinctrl-names = "default";
-	// 	pinctrl-0 = <&mcp23017_pins_a>;
-	// 	interrupt-controller;
-	// 	#interrupt-cells = <2>;
-	// 	gpio-ranges = <&pi4io 0 0 1>, <&pi4io 1 1 1>, <&pi4io 2 2 1>, <&pi4io 3 3 1>, <&pi4io 4 4 1>, <&pi4io 5 5 1>, <&pi4io 6 6 1>, <&pi4io 7 7 1>;
-	// 	// microchip,irq-mirror;
-	// };
-
-	gpioA: pi4io@43 {
-		compatible = "nxp,pi4io";
+	pi4ioe5v6408: pinctrl@43{
+		compatible = "pericom,pi4ioe5v6408";
 		reg = <0x43>;
 		gpio-controller;
 		#gpio-cells = <1>;
+		// interrupt-controller;
+		// #interrupt-cells = <2>;
+		// irq-gpios = <&ax_gpio0 4 GPIO_ACTIVE_LOW>;
+		// interrupt-parent = <&ax_gpio0>;
+		// input-debounce = <1>;
+		status = "okay";
+	};
+
+	touchscreen@14 {
+		compatible = "goodix,gt911";
+		reg = <0x14>;
+		interrupt-parent = <&ax_gpio0>;
+		irq-gpios = <&ax_gpio0 2 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&pi4ioe5v6408 1 GPIO_ACTIVE_HIGH>;
 		status = "okay";
 	};
 
@@ -198,7 +196,6 @@
 		int-gpio = <&ax_gpio0 0 0>;
 		bind-usb = "8000000.dwc3";
 		status = "okay";
-		
 	};
 
 	backlight: aw99703-bl@36 {
@@ -219,13 +216,9 @@
 	};
 
 	bq27220@55{
-		// pinctrl-names = "default";
-		// pinctrl-0 = <&pinctrl_bq27220>;		
 		compatible = "ti,bq27220";
 		reg = <0x55>;
-		// interrupt-parent = <&gpio7>;
-		// interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
-		status = "diabled";
+		status = "okay";
 	};
 };
 
@@ -240,18 +233,14 @@
 
 // DMA has an error, do not use.
 &ax_uart1 {
-	status = "okay";
 	axera,uart-16550-compatible = <1>;
 	/delete-property/dmas;
 	/delete-property/dma-names;
+	status = "okay";
 };
 
 // DMA has an error, do not use.
 &ax_uart2 {
-	pinctrl-names = "default", "gpio";
-	pinctrl-0 = <&uart2_txd_pins>, <&uart2_rxd_pins>;
-	pinctrl-1 = <&uart2_txd_gpio1_a0_pins>, <&uart2_rxd_gpio1_a1_pins>;
-
 	axera,uart-16550-compatible = <1>;
 	/delete-property/dmas;
 	/delete-property/dma-names;
