@@ -82,7 +82,6 @@ distclean:
 	@rm -f arch
 	@rm -f scripts
 	@rm -f include
-	@rm -f .config
 linux-distclean:
 	@$(KERNEL_MAKE) distclean
 	@rm -f build/check_config.tmp 
