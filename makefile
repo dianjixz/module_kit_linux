@@ -75,7 +75,10 @@ build/check_patch.tmp:$(PATCHES)
 build/check_config.tmp:$(CONFIG_FILES)
 	[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k419_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig ; }
 	[ -f '$(SRC_DIR)/.config' ] || $(KERNEL_MAKE) m5stack_AX630C_emmc_arm64_k419_defconfig
-	[ -f '.config' ] || ln -s $(SRC_DIR)/.config .config
+	@ if [ ! -L '.config' ] ; then \
+		rm .config ; \
+		ln -s $(SRC_DIR)/.config .config ; \
+	fi
 	@rm -f build/check_config.tmp
 	@touch build/check_config.tmp
 
