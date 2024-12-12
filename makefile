@@ -16,7 +16,6 @@ KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE)
 %:
 	@ if [ "$(MAKECMDGOALS)" != "build_init" ] ; then \
 		$(MAKE) build_init ; \
-		[ -f '$(SRC_DIR)/drivers/soc/axera/osal/osal_all_code.o' ] || cp src_overlay/osal_all_code.o $(SRC_DIR)/drivers/soc/axera/osal/osal_all_code.o ; \
 		$(KERNEL_MAKE)  $(MAKECMDGOALS) ; \
 	fi
 
