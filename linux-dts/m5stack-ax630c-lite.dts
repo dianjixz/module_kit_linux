@@ -369,7 +369,7 @@
 	gpio-mic-rn = <&ax_gpio1 6 0>; /* GPIO1_A6 */
 	gpio-mic-ln = <&ax_gpio1 5 0>; /* GPIO1_A5 */
 	gpio-mic-lp = <&ax_gpio1 4 0>; /* GPIO1_A4 */
-	gpio-pa-speaker = <&ax_gpio1 8 0>;
+	gpio-pa-speaker = <&ax_gpio0 1 1>;
 	status = "okay";
 };
 
