@@ -1,6 +1,6 @@
 --- a/drivers/gpio/gpio-pi4ioe5v64xx.c	2024-12-11 16:46:21.138087067 +0800
 +++ b/drivers/gpio/gpio-pi4ioe5v64xx.c	2024-12-11 16:46:00.013672277 +0800
-@@ -0,0 +1,902 @@
+@@ -0,0 +1,1065 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Driver for the Pericom PI4IOE5V6416 GPIO Expander.
@@ -15,7 +15,9 @@
 +#include <linux/kernel.h>
 +#include <linux/module.h>
 +#include <linux/regmap.h>
-+
++// #include <linux/pinctrl/pinctrl.h>
++// #include <linux/pinctrl/pinconf.h>
++// #include <linux/pinctrl/pinconf-generic.h>
 +// Registers
 +#define PI4IO16_INPUT_PORT0	0x00
 +#define PI4IO16_INPUT_PORT1	0x01
@@ -94,6 +96,9 @@
 +	struct regmap *regmap;
 +	struct gpio_chip gpio;
 +	struct gpio_desc *reset_gpio;
++//
++//	struct pinctrl_dev	*pctldev;
++//	struct pinctrl_desc	pinctrl_desc;
 +#ifdef CONFIG_GPIO_PI4IOE5V64XX_IRQ
 +	struct irq_chip irq_chip;
 +	struct mutex irq_lock;
@@ -182,6 +187,101 @@
 +
 +}
 +
++// static int pi4io_pinctrl_get_groups_count(struct pinctrl_dev *pctldev)
++// {
++// 	return 0;
++// }
++// 
++// static const char *pi4io_pinctrl_get_group_name(struct pinctrl_dev *pctldev,
++// 						unsigned int group)
++// {
++// 	return NULL;
++// }
++// 
++// static int pi4io_pinctrl_get_group_pins(struct pinctrl_dev *pctldev,
++// 					unsigned int group,
++// 					const unsigned int **pins,
++// 					unsigned int *num_pins)
++// {
++// 	return -ENOTSUPP;
++// }
++// 
++// static int pi4io_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin,
++// 			      unsigned long *config)
++// {
++// 	struct pi4ioxx_priv *pi4io = (struct pi4ioxx_priv *)pinctrl_dev_get_drvdata(pctldev);
++// 	struct i2c_client *client = pi4io->i2c;
++// 	struct device *dev = &client->dev;
++// 	enum pin_config_param param = pinconf_to_config_param(*config);
++// 	unsigned int data, status;
++// 	int ret;
++// 
++// 	switch (param) {
++// 	case PIN_CONFIG_BIAS_PULL_UP:
++// 		ret = regmap_read(pi4io->regmap, PI4IO08_PULLUP_ENB, &data);
++// 		if (ret < 0)
++// 			return ret;
++// 		status = (data & BIT(pin)) ? 1 : 0;
++// 		break;
++// 	case PIN_CONFIG_BIAS_PULL_DOWN:
++// 		ret = regmap_read(pi4io->regmap, PI4IO08_PULLUP_ENB, &data);
++// 		if (ret < 0)
++// 			return ret;
++// 		status = ((~data) & BIT(pin)) ? 1 : 0;
++// 		break;
++// 	default:
++// 		dev_err(dev, "Invalid config param %04x\n", param);
++// 		return -ENOTSUPP;
++// 	}
++// 
++// 	*config = 0;
++// 
++// 	return status ? 0 : -EINVAL;
++// }
++// 
++// static int pi4io_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
++// 			      unsigned long *configs, unsigned int num_configs)
++// {
++// 	struct pi4ioxx_priv *pi4io = (struct pi4ioxx_priv *)pinctrl_dev_get_drvdata(pctldev);
++// 	struct i2c_client *client = pi4io->i2c;
++// 	struct device *dev = &client->dev;
++// 	enum pin_config_param param;
++// 	u32 arg;
++// 	int ret = 0;
++// 	int i;
++// 
++// 	for (i = 0; i < num_configs; i++) {
++// 		param = pinconf_to_config_param(configs[i]);
++// 		arg = pinconf_to_config_argument(configs[i]);
++// 		u16 mask = BIT(pin);
++// 
++// 		switch (param) {
++// 		case PIN_CONFIG_BIAS_DISABLE:
++// 		{
++// 			ret = regmap_update_bits(pi4io->regmap, PI4IO08_PULLUP_ENB, mask, 0x0000);
++// 		}
++// 			break;
++// 		case PIN_CONFIG_BIAS_PULL_UP:
++// 		{
++// 			ret = regmap_update_bits(pi4io->regmap, PI4IO08_PULLUP_ENB, mask, 0xffff);
++// 			ret = regmap_update_bits(pi4io->regmap, PI4IO08_PULLUP_SEL, mask, 0xffff);
++// 		}
++// 			break;
++// 		case PIN_CONFIG_BIAS_PULL_DOWN:
++// 		{
++// 			ret = regmap_update_bits(pi4io->regmap, PI4IO08_PULLUP_ENB, mask, 0xffff);
++// 			ret = regmap_update_bits(pi4io->regmap, PI4IO08_PULLUP_SEL, mask, 0x0000);
++// 		}
++// 			break;
++// 		default:
++// 			dev_err(dev, "Invalid config param %04x\n", param);
++// 			return -ENOTSUPP;
++// 		}
++// 	}
++// 
++// 	return ret;
++// }
++
 +static const struct regmap_config pi4io16_regmap_config = {
 +	.reg_bits = 8,
 +	.val_bits = 8,
@@ -199,6 +299,53 @@
 +	.readable_reg = pi4ioxx_readable_reg,
 +	.volatile_reg = pi4ioxx_volatile_reg,
 +};
++
++// static const struct pinctrl_ops pi4io_pinctrl_ops = {
++// 	.get_groups_count = pi4io_pinctrl_get_groups_count,
++// 	.get_group_name = pi4io_pinctrl_get_group_name,
++// 	.get_group_pins = pi4io_pinctrl_get_group_pins,
++// #ifdef CONFIG_OF
++// 	.dt_node_to_map = pinconf_generic_dt_node_to_map_pin,
++// 	.dt_free_map = pinconf_generic_dt_free_map,
++// #endif
++// };
++// 
++// static const struct pinconf_ops pi4io_pinconf_ops = {
++// 	.pin_config_get = pi4io_pinconf_get,
++// 	.pin_config_set = pi4io_pinconf_set,
++// 	.is_generic = true,
++// };
++// 
++// static const struct pinctrl_pin_desc pi4iox08_pins[] = {
++// 	PINCTRL_PIN(0, "gpio0"),
++// 	PINCTRL_PIN(1, "gpio1"),
++// 	PINCTRL_PIN(2, "gpio2"),
++// 	PINCTRL_PIN(3, "gpio3"),
++// 	PINCTRL_PIN(4, "gpio4"),
++// 	PINCTRL_PIN(5, "gpio5"),
++// 	PINCTRL_PIN(6, "gpio6"),
++// 	PINCTRL_PIN(7, "gpio7"),
++// };
++// 
++// static const struct pinctrl_pin_desc pi4iox16_pins[] = {
++// 	PINCTRL_PIN(0, "gpio0"),
++// 	PINCTRL_PIN(1, "gpio1"),
++// 	PINCTRL_PIN(2, "gpio2"),
++// 	PINCTRL_PIN(3, "gpio3"),
++// 	PINCTRL_PIN(4, "gpio4"),
++// 	PINCTRL_PIN(5, "gpio5"),
++// 	PINCTRL_PIN(6, "gpio6"),
++// 	PINCTRL_PIN(7, "gpio7"),
++// 	PINCTRL_PIN(8, "gpio8"),
++// 	PINCTRL_PIN(9, "gpio9"),
++// 	PINCTRL_PIN(10, "gpio10"),
++// 	PINCTRL_PIN(11, "gpio11"),
++// 	PINCTRL_PIN(12, "gpio12"),
++// 	PINCTRL_PIN(13, "gpio13"),
++// 	PINCTRL_PIN(14, "gpio14"),
++// 	PINCTRL_PIN(15, "gpio15"),
++// };
++
 +
 +static int pi4ioxx_byte_reg_read(void *context, unsigned int reg,
 +				      unsigned int *val)
@@ -828,6 +975,22 @@
 +		dev_err(dev, "Failed to setup GPIOs: %d", ret);
 +		return ret;
 +	}
++	
++//	pi4io->pinctrl_desc.name = "pi4ioe5v64xx-pinctrl";
++//	pi4io->pinctrl_desc.pctlops = &pi4io_pinctrl_ops;
++//	pi4io->pinctrl_desc.confops = &pi4io_pinconf_ops;
++//	pi4io->pinctrl_desc.npins = pi4io->gpio.ngpio;
++//	if (pi4io->pinctrl_desc.npins == 8)
++//		pi4io->pinctrl_desc.pins = pi4iox08_pins;
++//	else if (pi4io->pinctrl_desc.npins == 16)
++//		pi4io->pinctrl_desc.pins = pi4iox16_pins;
++//	pi4io->pinctrl_desc.owner = THIS_MODULE;
++//
++//	pi4io->pctldev = devm_pinctrl_register(dev, &pi4io->pinctrl_desc, pi4io);
++//	if (IS_ERR(pi4io->pctldev)) {
++//		ret = PTR_ERR(pi4io->pctldev);
++//		return ret;
++//	}
 +	
 +	ret = pi4ioxx_irq_setup(pi4io);
 +	if (ret < 0) {
