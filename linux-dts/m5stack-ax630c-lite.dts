@@ -179,14 +179,13 @@
 		status = "okay";
 	};
 
-	touchscreen: gt911@14 {
-		compatible = "goodix,gt911";
-		reg = <0x14>;
-		// interrupt-parent = <&ax_gpio0>;
-		irq-gpios = <&ax_gpio0 2 1>;
-		// reset-gpios = <&pi4ioe5v6408 1 1>;
-		status = "okay";
-	};
+	// touchscreen: gt911@14 {
+	// 	compatible = "goodix,gt911";
+	// 	reg = <0x14>;
+	// 	irq-gpios = <&ax_gpio0 2 0>;
+	// 	// reset-gpios = <&pi4ioe5v6408 1 1>;
+	// 	status = "okay";
+	// };
 
 	typec: sgm7220@47 {
 		pinctrl-names = "default";
@@ -591,7 +590,7 @@
 	enable-delay-ms = <0>;
 	disable-delay-ms = <150>;
 	// reset-gpio = <&ax_gpio1 0 0>;
-	// reset-gpio = <&pi4ioe5v6408 2 1>;
+	// reset-gpio = <&pi4ioe5v6408 2 0>;
 	backlight = <&backlight>;
 	dsi,format = <MIPI_DSI_FMT_RGB888>;
 	dsi,lanes = <2>;
