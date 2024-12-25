@@ -14,7 +14,7 @@ LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e
 ifeq ($(strip $(M)),)
 KERNEL_MAKE := $(MAKE) -C $(SRC_DIR)
 else
-KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(M)
+KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(PWD)
 endif
 
 %:
