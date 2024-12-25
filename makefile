@@ -11,7 +11,11 @@ LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
-KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE)
+ifeq ($(strip $(M)),)
+KERNEL_MAKE := $(MAKE) -C $(SRC_DIR)
+else
+KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(M)
+endif
 
 %:
 	@ if [ "$(MAKECMDGOALS)" != "build_init" ] ; then \
