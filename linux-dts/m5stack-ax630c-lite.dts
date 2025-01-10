@@ -123,6 +123,28 @@
 		logstate = /bits/ 8 <1 1>;
 		loglevel = /bits/ 8 <4 4>;
 	};
+	leds {
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&leds_pins>;
+		compatible = "gpio-leds";
+		led0 {
+			label = "boot";
+			gpios = <&ax_gpio0 3 0>;
+			default-state = "on";
+		};
+		led1 {
+			label = "runing";
+			gpios = <&ax_gpio0 5 0>;
+			default-state = "on";
+			linux,default-trigger = "heartbeat";
+		};
+		led2 {
+			label = "sys_led";
+			gpios = <&pi4ioe5v6408 4 0>;
+			default-state = "on";
+		};
+	};
+
 
 	// vfb0: vfb@0 {
 	// 	compatible = "axera,vfb";
@@ -183,7 +205,7 @@
 		compatible = "goodix,gt911";
 		reg = <0x14>;
 		irq-gpios = <&ax_gpio0 2 0>;
-		reset-gpios = <&pi4ioe5v6408 1 1>;
+		reset-gpios = <&pi4ioe5v6408 1 0>;
 		status = "okay";
 	};
 
@@ -217,6 +239,12 @@
 	bq27220@55{
 		compatible = "ti,bq27220";
 		reg = <0x55>;
+		status = "okay";
+	};
+
+	imu@68 {
+		compatible = "bosch,bmi270";
+		reg = <0x68>;
 		status = "okay";
 	};
 };
@@ -590,7 +618,7 @@
 	enable-delay-ms = <0>;
 	disable-delay-ms = <150>;
 	// reset-gpio = <&ax_gpio1 0 0>;
-	// reset-gpio = <&pi4ioe5v6408 2 0>;
+	reset-gpio = <&pi4ioe5v6408 2 0>;
 	backlight = <&backlight>;
 	dsi,format = <MIPI_DSI_FMT_RGB888>;
 	dsi,lanes = <2>;
