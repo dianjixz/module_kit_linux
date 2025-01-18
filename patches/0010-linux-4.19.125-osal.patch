@@ -605,7 +605,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +void ax_os_mem_kfree(int id, const void *addr);
 +void *ax_os_mem_vmalloc(int id, size_t size);
 +void ax_os_mem_vfree(int id, const void *addr);
-+s32 ax_os_release_reserved_mem(unsigned long phy_start, size_t size, const char *s);
++s32 ax_os_release_reserved_mem(unsigned long phy_start, size_t size, char *s);
 +
 +//file system , only for linux kernel
 +#define AX_OSAL_O_RDONLY         00

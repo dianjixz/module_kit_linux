@@ -7,7 +7,10 @@ SRC_DIR := build/linux-4.19.125
 PATCHES := $(wildcard patches/*.patch)
 DTSS := $(wildcard linux-dts/*.dts*)
 CONFIG_FILES := $(wildcard *.config)
-LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
+# LINUX_TAR_URL := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz
+# LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
+LINUX_TAR_URL := https://mirror.tuna.tsinghua.edu.cn/kernel/v4.x/linux-4.19.125.tar.gz
+LINUX_TAR_SHA := cfecceea9120449cfa45c1db36fd1e245a3496c65b77f30b3544c0dc46a310fb
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
@@ -38,7 +41,7 @@ Configuring:Patching
 build/check_build.tmp:$(PATCHES)
 	[ -d 'build' ] || mkdir build
 	@if [ -f '.stamp_extracted' ] ; then \
-		[ -f '../../../dl/linux-4.19.125.tar.gz' ] || wget --passive-ftp -nd -t 3 -O '../../../dl/linux-4.19.125.tar.gz' 'https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz' ; \
+		[ -f '../../../dl/linux-4.19.125.tar.gz' ] || wget --passive-ftp -nd -t 3 -O '../../../dl/linux-4.19.125.tar.gz' ${LINUX_TAR_URL} ; \
 		calculated_hash=$$(sha256sum ../../../dl/linux-4.19.125.tar.gz | awk '{ print $$1 }'); \
 		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
 			rm ../../../dl/linux-4.19.125.tar.gz ; \
@@ -46,7 +49,7 @@ build/check_build.tmp:$(PATCHES)
 		fi ; \
 		[ -d 'build/linux-4.19.125' ] || tar zxf ../../../dl/linux-4.19.125.tar.gz -C build/ ; \
 	else \
-		[ -f '.linux-4.19.125.tar.gz' ] || wget --passive-ftp -nd -t 3 -O '.linux-4.19.125.tar.gz' 'https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz' ; \
+		[ -f '.linux-4.19.125.tar.gz' ] || wget --passive-ftp -nd -t 3 -O '.linux-4.19.125.tar.gz' ${LINUX_TAR_URL} ; \
 		calculated_hash=$$(sha256sum .linux-4.19.125.tar.gz | awk '{ print $$1 }'); \
 		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
 			rm .linux-4.19.125.tar.gz ; \
