@@ -69,7 +69,7 @@ diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.c b/linux-4.19.125/
 index 1dc2a65cbe..96c42a6319 100644
 --- a/drivers/gpu/drm/axera/ax_drm_vfb.c
 +++ b/drivers/gpu/drm/axera/ax_drm_vfb.c
-@@ -280,6 +280,7 @@ static int vfb_ioctl(struct fb_info *info, unsigned int cmd, unsigned long arg)
+@@ -221,6 +221,7 @@
  	struct axfb_cursor_pos hot;
  	struct axfb_cursor_res res;
  	struct axfb_colorkey colorkey;
@@ -77,11 +77,10 @@ index 1dc2a65cbe..96c42a6319 100644
  	__u16 cursor_show;
  	void __user *argp = (void __user *)arg;
  	int ret = 0;
-@@ -353,6 +354,21 @@ static int vfb_ioctl(struct fb_info *info, unsigned int cmd, unsigned long arg)
- 		vfbdev->colorkey.enable = colorkey.enable;
+@@ -295,6 +296,21 @@
  		vfbdev->colorkey.inv = colorkey.inv;
  
-+		break;
+ 		break;
 +	case AX_FBIOGET_BLEND_INFO:
 +		blend_info.mode = vfbdev->blend_info.mode;
 +		blend_info.stride = vfbdev->blend_info.stride;
@@ -96,9 +95,10 @@ index 1dc2a65cbe..96c42a6319 100644
 +		vfbdev->blend_info.mode = blend_info.mode;
 +		vfbdev->blend_info.stride = blend_info.stride;
 +		vfbdev->blend_info.phy_addr = blend_info.phy_addr;
- 		break;
++		break;
  	default:
  		ret = -ENOTTY;
+ 	}
 diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h
 index 70e0ca08e4..b3cf724771 100644
 --- a/drivers/gpu/drm/axera/ax_drm_vfb.h
@@ -127,21 +127,21 @@ diff --git a/linux-4.19.125/include/linux/ax_display_hal.h b/linux-4.19.125/incl
 index da81c15bd1..bb075e8bb9 100644
 --- a/include/linux/ax_display_hal.h
 +++ b/include/linux/ax_display_hal.h
-@@ -75,6 +75,13 @@ enum {
- 	AX_VO_FORMAT_BUT,
+@@ -77,6 +77,13 @@
  };
  
-+enum {
+ enum {
 +	AX_VO_BLEND_MODE_PER_PIXEL,
 +	AX_VO_BLEND_MODE_GLOBAL0,
 +	AX_VO_BLEND_MODE_GLOBAL1,
 +	AX_VO_BLEND_MODE_BUT,
 +};
 +
- enum {
++enum {
      AX_VO_CSC_MATRIX_IDENTITY = 0,
      AX_VO_CSC_MATRIX_BT601_TO_BT601,
-@@ -138,6 +145,8 @@ struct ax_fb {
+     AX_VO_CSC_MATRIX_BT601_TO_BT709,
+@@ -139,6 +146,8 @@
  
  	u32 format;
  
@@ -150,7 +150,7 @@ index da81c15bd1..bb075e8bb9 100644
  	u32 fb_w;
  	u32 fb_h;
  
-@@ -155,12 +164,14 @@ struct ax_fb {
+@@ -156,12 +165,14 @@
  
  	u32 stride_y;
  	u32 stride_c;

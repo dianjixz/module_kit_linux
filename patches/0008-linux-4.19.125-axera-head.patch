@@ -50,7 +50,7 @@ diff -u -r -N include/axera/ax_base_type.h include/axera/ax_base_type.h
 diff -u -r -N include/axera/ax_global_type.h include/axera/ax_global_type.h
 --- a/include/axera/ax_global_type.h	1970-01-01 08:00:00.000000000 +0800
 +++ b/include/axera/ax_global_type.h	2024-12-04 16:47:38.061174872 +0800
-@@ -0,0 +1,642 @@
+@@ -0,0 +1,643 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -66,7 +66,7 @@ diff -u -r -N include/axera/ax_global_type.h include/axera/ax_global_type.h
 +#include "ax_base_type.h"
 +
 +#define DEF_ALL_MOD_GRP_MAX         (32)
-+#define DEF_ALL_MOD_CHN_MAX         (64)
++#define DEF_ALL_MOD_CHN_MAX         (16)
 +#define AX_LINK_DEST_MAXNUM         (6)
 +#define AX_MAX_COLOR_COMPONENT      (3)         /* VENC support Y/U/V three planes come from external input */
 +#define AX_MAX_COMPRESS_LOSSY_LEVEL (10)
@@ -110,6 +110,7 @@ diff -u -r -N include/axera/ax_global_type.h include/axera/ax_global_type.h
 +typedef enum {
 +    NONE_CHIP_TYPE = 0x0,
 +    AX620Q_CHIP = 0x1,
++    AX620QX_CHIP = 0x2,
 +    AX630C_CHIP = 0x4,
 +    AX620E_CHIP_MAX
 +} AX_CHIP_TYPE_E;

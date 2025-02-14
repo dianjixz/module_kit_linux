@@ -59,6 +59,7 @@
 		axera_memory_dump@0 {
 			compatible = "axera_memory_dump";
 			reg = <0x0 0x480f0000 0x0 0x3000>;
+			dump_ranges = <0x0 0x40001000 0x0 0x80000000>;
 			no-map;
 		};
 		atf_reserved: atf_memreserved {
@@ -117,12 +118,49 @@
 		};
 	};
 
+	// vfb0: vfb@0 {
+	// 	compatible = "axera,vfb";
+	// 	id = <0>;
+	// 	width = <1920>;
+	// 	height = <1080>;
+	// 	bpp = <32>;
+	// 	buf-num = <2>;
+	// 	status = "okay";
+	// };
+
+	// vfb1: vfb@1 {
+	// 	compatible = "axera,vfb";
+	// 	id = <1>;
+	// 	width = <1920>;
+	// 	height = <1080>;
+	// 	bpp = <32>;
+	// 	buf-num = <2>;
+	// 	status = "okay";
+	// };
+
+	// vfb2: vfb@2 {
+	// 	compatible = "axera,vfb";
+	// 	id = <2>;
+	// 	width = <64>;
+	// 	height = <64>;
+	// 	bpp = <32>;
+	// 	buf-num = <1>;
+	// 	cursor;
+	// 	status = "okay";
+	// };
+
 	axera_logctl {
 		compatible = "axera,logctl";
 		config = "/etc/ax_syslog.conf";
 		logstate = /bits/ 8 <1 1>;
 		loglevel = /bits/ 8 <4 4>;
 	};
+
+	// extcon_usb: extcon_usb {
+	// 	compatible = "linux,extcon-usb-gpio";
+	// 	id-gpio = <&ax_gpio0 30 0>; /* GPIO0_A30 */
+	// 	status = "okay";
+	// };
 	leds {
 		// pinctrl-names = "default";
 		// pinctrl-0 = <&leds_pins>;
@@ -144,18 +182,6 @@
 			default-state = "on";
 		};
 	};
-
-
-	// vfb0: vfb@0 {
-	// 	compatible = "axera,vfb";
-	// 	id = <0>;
-	// 	width = <720>;
-	// 	height = <1280>;
-	// 	bpp = <24>;
-	// 	buf-num = <2>;
-	// 	status = "okay";
-	// };
-
 };
 
 &pwm0 {
@@ -170,8 +196,8 @@
 	status = "okay";
 };
 
-// &deb_gpio_lp_emmc {
-// 	lp-num = <0xB>; /* use db_gpio11 as wakeup source */
+// &deb_gpio_lp {
+// 	lp-status = <11 1>; /* use db_gpio11 as wakeup source */
 // 	status = "okay";
 // };
 
@@ -249,6 +275,17 @@
 	};
 };
 
+// &i2c_slv0 {
+// 	status = "okay";
+// 	#address-cells = <0x1>;
+// 	#size-cells = <0x0>;
+// 	i2c_slave_eeprom: i2c_slave_eeprom@55 {
+// 		compatible = "axera,slave-24c02";
+// 		reg = <0x40000055>;
+// 		status = "okay";
+// 	};
+// };
+
 // &i2c2 {
 // 	status = "okay";
 // };
@@ -309,15 +346,13 @@
 	cdns,phy-input-delay-mmc-highspeed = <2>;
 	cdns,phy-input-delay-mmc-ddr = <2>;
 	cdns,phy-dll-delay-sdclk = <45>;
-	cdns,phy-dll-delay-sdclk-hsmmc = <23>;
+	cdns,phy-dll-delay-sdclk-hsmmc = <31>;
 	cdns,phy-dll-delay-strobe = <18>;
 	fixed-emmc-driver-type = <4>;
 	status = "okay";
 };
 
 &sd{
-	pinctrl-names = "default";
-	pinctrl-0 = <&sd_pwr_sw_pins>;
 	sdhci-caps-mask = <0x7 0x00200000>;
 	bus-width = <4>;
 	max-frequency = <200000000>;
@@ -331,10 +366,13 @@
 	// no-1-8-v;
 	no-mmc;
 	disable-wp;
-
+#if 0
+	broken-cd;
+#else
 	cd-gpios = <&ax_gpio1 11 0>;
 	cd-inverted;
-	cd-debounce-delay-ms = <500>;
+	cd-debounce-delay-ms = <300>;
+#endif
 
 	cdns,phy-input-delay-sd-highspeed = <2>;
 	cdns,phy-input-delay-legacy = <3>;
@@ -348,10 +386,6 @@
 };
 
 &sdio{
-	pinctrl-names = "default", "gpio";
-	pinctrl-0 = <&sdio_clk_pins>, <&sdio_cmd_pins>, <&sdio_dat0_pins>, <&sdio_dat1_pins>, <&sdio_dat2_pins>, <&sdio_dat3_pins>, <&emmc_pwr_en_gpio0_a17_pins>;
-	pinctrl-1 = <&sdio_clk_gpio2_a0_pins>, <&sdio_cmd_gpio2_a1_pins>, <&sdio_dat0_gpio1_a30_pins>, <&sdio_dat1_gpio1_a31_pins>, <&sdio_dat2_gpio2_a2_pins>, <&sdio_dat3_gpio2_a3_pins>, <&emmc_pwr_en_gpio0_a17_pins>;
-
 	sdhci-caps-mask = <0x7 0x00200000>;
 	bus-width = <4>;
 	max-frequency = <40000000>;
@@ -390,6 +424,58 @@
 	status = "okay";
 };
 
+// &spi0 {
+//        status = "disabled";
+//        spidev_user@0 {
+//                status = "okay";
+//                compatible = "axera,spidev";
+//                reg = <0>;
+//                spi-max-frequency = <26000000>;
+//        };
+// };
+
+// &spi1 {
+//        status = "disabled";
+//        spidev_user@0 {
+//                status = "okay";
+//                compatible = "axera,spidev";
+//                reg = <0>;
+//                spi-max-frequency = <26000000>;
+//        };
+// };
+
+// &spi2 {
+//        status = "disabled";
+//        spidev_user@0 {
+//                status = "okay";
+//                compatible = "axera,spidev";
+//                reg = <0>;
+//                spi-max-frequency = <26000000>;
+//        };
+// };
+
+// &spi_slv {
+//        status = "disabled";
+//        stream-tx-gpio = <&ax_gpio2 13 0>;
+//        stream-rx-gpio = <&ax_gpio2 14 0>;
+// };
+
+// &spi4 {
+// 	status = "okay";
+// 	spi_nand@0 {
+// 		compatible = "spi-nand";
+// 		reg = <0>;
+// 		rx-sample-delay-ns = <4>;
+// 		spi-max-frequency = <50000000>;
+// 	};
+// 	/*spi_flash@0 {
+// 		#address-cells = <1>;
+// 		#size-cells = <1>;
+// 		compatible = "jedec,spi-nor";
+// 		reg = <0>;
+// 		spi-max-frequency = <50000000>;
+// 	};*/
+// };
 
 &audio_codec {
 	gpio-mic-rp = <&ax_gpio1 7 0>; /* GPIO1_A7 */
@@ -397,6 +483,8 @@
 	gpio-mic-ln = <&ax_gpio1 5 0>; /* GPIO1_A5 */
 	gpio-mic-lp = <&ax_gpio1 4 0>; /* GPIO1_A4 */
 	gpio-pa-speaker = <&ax_gpio0 1 1>;
+	// gpio-pa-speaker = <&ax_gpio_ext 2 0>;
+	// gpio-pa-lineout = <&ax_gpio_ext 15 0>;
 	status = "okay";
 };
 
@@ -445,6 +533,95 @@
 	tdm-s-sclk-sel = <0>;         /*0*/
 };
 
+// &i2s_mst0 {
+// 	status = "disabled";
+// 	/*i2s - pad0*/
+// 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
+// 	i2s-m-aec-sclk-sel = <0>;     /*21*/
+// 	i2s-inner-codec-en = <0>;     /*20*/
+// 	i2s-exter-codec-en = <1>;     /*19*/
+// 	i2s-m-exter-codec-en = <0>;   /*18*/
+// 	i2s-exter-codec-mst = <1>;    /*17*/
+// 	i2s-m-exter-codec-mst = <0>;  /*16*/
+// 	iis-out-tdm-en = <0>;         /*15*/
+// 	iis-m-out-tdm-en = <0>;       /*14*/
+// 	i2s-m-rx0-sel = <0>;          /*13*/
+// 	i2s-m-rx1-sel = <2>;          /*12-11*/
+// 	i2s-s-rx0-sel = <0>;          /*10-9*/
+// 	i2s-s-rx1-sel = <0>;          /*8-7*/
+// 	i2s-s-sclk-sel = <0>;         /*6-5*/
+// 	tdm-m-rx-sel = <0>;           /*4-3*/
+// 	tdm-s-rx-sel = <0>;           /*2-1*/
+// 	tdm-s-sclk-sel = <0>;         /*0*/
+// };
+
+// &i2s_slv0 {
+// 	status = "disabled";
+// 	/*i2s - pad0*/
+// 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
+// 	i2s-m-aec-sclk-sel = <0>;     /*21*/
+// 	i2s-inner-codec-en = <0>;     /*20*/
+// 	i2s-exter-codec-en = <1>;     /*19*/
+// 	i2s-m-exter-codec-en = <0>;   /*18*/
+// 	i2s-exter-codec-mst = <0>;    /*17*/
+// 	i2s-m-exter-codec-mst = <0>;  /*16*/
+// 	iis-out-tdm-en = <0>;         /*15*/
+// 	iis-m-out-tdm-en = <0>;       /*14*/
+// 	i2s-m-rx0-sel = <0>;          /*13*/
+// 	i2s-m-rx1-sel = <0>;          /*12-11*/
+// 	i2s-s-rx0-sel = <1>;          /*10-9*/
+// 	i2s-s-rx1-sel = <3>;          /*8-7*/
+// 	i2s-s-sclk-sel = <1>;         /*6-5*/
+// 	tdm-m-rx-sel = <0>;           /*4-3*/
+// 	tdm-s-rx-sel = <0>;           /*2-1*/
+// 	tdm-s-sclk-sel = <0>;         /*0*/
+// };
+
+// &i2s_tdm_mst0 {
+// 	status = "disabled";
+// 	/*i2s - pad0*/
+// 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
+// 	i2s-m-aec-sclk-sel = <0>;     /*21*/
+// 	i2s-inner-codec-en = <0>;     /*20*/
+// 	i2s-exter-codec-en = <1>;     /*19*/
+// 	i2s-m-exter-codec-en = <0>;   /*18*/
+// 	i2s-exter-codec-mst = <1>;    /*17*/
+// 	i2s-m-exter-codec-mst = <0>;  /*16*/
+// 	iis-out-tdm-en = <1>;         /*15*/
+// 	iis-m-out-tdm-en = <0>;       /*14*/
+// 	i2s-m-rx0-sel = <0>;          /*13*/
+// 	i2s-m-rx1-sel = <0>;          /*12-11*/
+// 	i2s-s-rx0-sel = <0>;          /*10-9*/
+// 	i2s-s-rx1-sel = <0>;          /*8-7*/
+// 	i2s-s-sclk-sel = <0>;         /*6-5*/
+// 	tdm-m-rx-sel = <0>;           /*4-3*/
+// 	tdm-s-rx-sel = <0>;           /*2-1*/
+// 	tdm-s-sclk-sel = <0>;         /*0*/
+// };
+
+// &i2s_tdm_slv0 {
+// 	status = "disabled";
+// 	/*i2s - pad0*/
+// 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
+// 	i2s-m-aec-sclk-sel = <0>;     /*21*/
+// 	i2s-inner-codec-en = <0>;     /*20*/
+// 	i2s-exter-codec-en = <1>;     /*19*/
+// 	i2s-m-exter-codec-en = <0>;   /*18*/
+// 	i2s-exter-codec-mst = <0>;    /*17*/
+// 	i2s-m-exter-codec-mst = <0>;  /*16*/
+// 	iis-out-tdm-en = <0>;         /*15*/
+// 	iis-m-out-tdm-en = <0>;       /*14*/
+// 	i2s-m-rx0-sel = <0>;          /*13*/
+// 	i2s-m-rx1-sel = <0>;          /*12-11*/
+// 	i2s-s-rx0-sel = <0>;          /*10-9*/
+// 	i2s-s-rx1-sel = <0>;          /*8-7*/
+// 	i2s-s-sclk-sel = <0>;         /*6-5*/
+// 	tdm-m-rx-sel = <0>;           /*4-3*/
+// 	tdm-s-rx-sel = <0>;           /*2-1*/
+// 	tdm-s-sclk-sel = <0>;         /*0*/
+// };
+
+#if 1
 // 千兆以太网 JL2101 和 RTL8211F 的配置
 &eth0 {
 	status = "okay";
@@ -485,30 +662,30 @@
 		};
 	};
 };
-
+#else
 // 板载百兆以太网配置
-// &eth0 {
-// 	status = "okay";
+&eth0 {
+	status = "okay";
 
-// 	phy-handle = <&phy0>;
-// 	phy-mode = "rmii";
-// 	axera-ephy,led0-mode = <EPHY_LED_SPEED>;
-// 	axera-ephy,led0-enable;
-// 	axera-ephy,led1-mode = <EPHY_LED_LINK>;
-// 	axera-ephy,led1-enable;
-// 	axera-ephy,led-polarity = <EPHY_LED_LOW_ACTIVE>;
-// 	mdio {
-// 		#address-cells = <1>;
-// 		#size-cells = <0>;
-// 		compatible = "snps,dwmac-mdio";
-// 		phy0: axera-ephy@1 {
-// 			device_tpye = "ethernet-phy";
-// 			compatible = "ethernet-phy-id0044.1400";
-// 			reg = <1>;
-// 		};
-// 	};
-// };
-
+	phy-handle = <&phy0>;
+	phy-mode = "rmii";
+	axera-ephy,led0-mode = <EPHY_LED_SPEED>;
+	axera-ephy,led0-enable;
+	axera-ephy,led1-mode = <EPHY_LED_LINK>;
+	axera-ephy,led1-enable;
+	axera-ephy,led-polarity = <EPHY_LED_LOW_ACTIVE>;
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "snps,dwmac-mdio";
+		phy0: axera-ephy@1 {
+			device_tpye = "ethernet-phy";
+			compatible = "ethernet-phy-id0044.1400";
+			reg = <1>;
+		};
+	};
+};
+#endif
 
 &ddr_dfs {
        status = "okay";
@@ -582,6 +759,10 @@
 // 	status = "okay";
 // };
 
+&dsi {
+	status = "okay";
+};
+
 &dma {
 	status = "okay";
 };
@@ -601,11 +782,8 @@
 &ax_firewall {
 	status = "okay";
 };
-&dsi {
 
-	status = "okay";
-};
-/*
+#if 0
 // st7703
 &panel_dsi {
 	pinctrl-names = "default";
@@ -680,8 +858,7 @@
 		};
 	};
 };
-*/
-
+#else
 // ili9881c
 &panel_dsi {
 	pinctrl-names = "default";
@@ -921,7 +1098,7 @@
 		};
 	};
 };
-
+#endif
 
 
 

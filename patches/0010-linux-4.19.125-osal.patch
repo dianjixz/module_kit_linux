@@ -1,6 +1,49 @@
-diff -r -u -N drivers/soc/axera/osal/include/axdev.h b/drivers/soc/axera/osal/include/axdev.h"
---- a/drivers/soc/axera/osal/include/axdev.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/axdev.h	2024-12-04 17:23:53.979795115 +0800
+--- a/drivers/soc/axera/osal/include/axdev_log.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/axdev_log.h	2025-02-14 17:44:16.562266175 +0800
+@@ -0,0 +1,41 @@
++/**************************************************************************************************
++ *
++ * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
++ *
++ * This source file is the property of Axera Semiconductor Co., Ltd. and
++ * may not be copied or distributed in any isomorphic form without the prior
++ * written consent of Axera Semiconductor Co., Ltd.
++ *
++ **************************************************************************************************/
++
++#ifndef _LINUX_AXDEV_LOG_H_
++#define _LINUX_AXDEV_LOG_H_
++
++#include <linux/printk.h>
++
++#define AXDEV_LOG_EMERG(fmt,...) \
++    pr_emerg("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_ALERT(fmt,...) \
++    pr_alert("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_CRIT(fmt,...) \
++    pr_crit("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_ERR(fmt,...) \
++    pr_err("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_WARN(fmt,...) \
++    pr_warning("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_NOTICE(fmt,...) \
++    pr_notice("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_INFO(fmt,...) \
++    pr_info("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_DEBUG(fmt,...) \
++    pr_debug("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
++
++#define AXDEV_LOG_ERROR     AXDEV_LOG_ERR
++#endif
+--- a/drivers/soc/axera/osal/include/axdev.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/axdev.h	2025-02-14 17:44:16.570266175 +0800
 @@ -0,0 +1,95 @@
 +/**************************************************************************************************
 + *
@@ -97,54 +140,8 @@ diff -r -u -N drivers/soc/axera/osal/include/axdev.h b/drivers/soc/axera/osal/in
 +    "-" __stringify(minor))
 +
 +#endif /*_LINUX_AXDEV_DEVICE_H_*/
-diff -r -u -N drivers/soc/axera/osal/include/axdev_log.h b/drivers/soc/axera/osal/include/axdev_log.h"
---- a/drivers/soc/axera/osal/include/axdev_log.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/axdev_log.h	2024-12-04 17:23:53.979795115 +0800
-@@ -0,0 +1,41 @@
-+/**************************************************************************************************
-+ *
-+ * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
-+ *
-+ * This source file is the property of Axera Semiconductor Co., Ltd. and
-+ * may not be copied or distributed in any isomorphic form without the prior
-+ * written consent of Axera Semiconductor Co., Ltd.
-+ *
-+ **************************************************************************************************/
-+
-+#ifndef _LINUX_AXDEV_LOG_H_
-+#define _LINUX_AXDEV_LOG_H_
-+
-+#include <linux/printk.h>
-+
-+#define AXDEV_LOG_EMERG(fmt,...) \
-+    pr_emerg("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_ALERT(fmt,...) \
-+    pr_alert("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_CRIT(fmt,...) \
-+    pr_crit("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_ERR(fmt,...) \
-+    pr_err("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_WARN(fmt,...) \
-+    pr_warning("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_NOTICE(fmt,...) \
-+    pr_notice("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_INFO(fmt,...) \
-+    pr_info("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_DEBUG(fmt,...) \
-+    pr_debug("[AXDEV][KO][%s][%d]: "fmt, __FUNCTION__, __LINE__, ##__VA_ARGS__);
-+
-+#define AXDEV_LOG_ERROR     AXDEV_LOG_ERR
-+#endif
-diff -r -u -N drivers/soc/axera/osal/include/base.h b/drivers/soc/axera/osal/include/base.h"
---- a/drivers/soc/axera/osal/include/base.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/base.h	2024-12-04 17:23:53.979795115 +0800
+--- a/drivers/soc/axera/osal/include/base.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/base.h	2025-02-14 17:44:16.574266175 +0800
 @@ -0,0 +1,26 @@
 +/**************************************************************************************************
 + *
@@ -172,10 +169,9 @@ diff -r -u -N drivers/soc/axera/osal/include/base.h b/drivers/soc/axera/osal/inc
 +void axdev_driver_unregister(struct axdev_driver *pdrv);
 +
 +#endif
-diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/include/osal_ax.h"
---- a/drivers/soc/axera/osal/include/osal_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_ax.h	2024-12-04 17:23:53.979795115 +0800
-@@ -0,0 +1,529 @@
+--- a/drivers/soc/axera/osal/include/osal_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_ax.h	2025-02-14 17:44:16.574266175 +0800
+@@ -0,0 +1,527 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -415,22 +411,15 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +    void *wait;
 +} AX_WAIT_T;
 +int AX_OSAL_SYNC_waitqueue_init(AX_WAIT_T *wait);
-+unsigned int AX_OSAL_SYNC_wait_uninterruptible(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param);
 +//only for linux kernel
-+unsigned int AX_OSAL_SYNC_wait_interruptible(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param);
-+unsigned int AX_OSAL_SYNC_wait_uninterruptible_timeout(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param,
-+        unsigned long timeout);
-+//only for linux kernel
-+unsigned int AX_OSAL_SYNC_wait_interruptible_timeout(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param,
-+        unsigned long timeout);
 +void AX_OSAL_SYNC_wakeup(AX_WAIT_T *wait, void *key);
 +void AX_OSAL_SYNC_wake_up_interruptible(AX_WAIT_T *osal_wait, void *key);
 +void AX_OSAL_SYNC_wake_up_interruptible_all(AX_WAIT_T *wait, void *key);
 +
 +void AX_OSAL_SYNC_wait_destroy(AX_WAIT_T *wait);
 +
-+/*wait event*/
-+
++/*wait event interrupt*/
++unsigned int __AX_OSAL_SYNC_wait_interruptible(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param);
 +#define AX_OSAL_SYNC_wait_event_interruptible(wait, func, param) \
 +		({									\
 +			int __ret = 0;							\
@@ -439,7 +428,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +					__ret = 0;					\
 +					break;					  \
 +				}\
-+				__ret = AX_OSAL_SYNC_wait_interruptible(wait, (func), param);	\
++				__ret = __AX_OSAL_SYNC_wait_interruptible(wait, (func), param);	\
 +				if(__ret < 0){				  \
 +					if(__ret == -2) {  \
 +						__ret = 0;   \
@@ -452,6 +441,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +
 +
 +
++/*wait event interrupt*/
++unsigned int __AX_OSAL_SYNC_wait_interruptible_timeout(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param,unsigned long timeout);
 +#define AX_OSAL_SYNC_wait_event_interruptible_timeout(wait, func, param, timeout) \
 +	({									\
 +		int __ret = timeout;						  \
@@ -466,7 +457,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +			{\
 +				break;					  \
 +			}\
-+			__ret = AX_OSAL_SYNC_wait_interruptible_timeout(wait, (func), param, __ret);	 \
++			__ret = __AX_OSAL_SYNC_wait_interruptible_timeout(wait, (func), param, __ret);	 \
 +			if(__ret < 0)	\
 +			{\
 +				break;  \
@@ -480,6 +471,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +		__ret;									 \
 +	})
 +
++unsigned int __AX_OSAL_SYNC_wait_uninterruptible(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param);
 +#define AX_OSAL_SYNC_wait_event(wait, func, param) \
 +({                                  \
 +    int __ret = 0;                          \
@@ -488,13 +480,14 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +            __ret = 0;                  \
 +            break;                    \
 +        }\
-+        __ret = AX_OSAL_SYNC_wait_uninterruptible(wait, (func), param);   \
++        __ret = __AX_OSAL_SYNC_wait_uninterruptible(wait, (func), param);   \
 +        if(__ret < 0)                 \
 +            break;           \
 +    }                                    \
 +    __ret;                                   \
 +})
 +
++unsigned int __AX_OSAL_SYNC_wait_uninterruptible_timeout(AX_WAIT_T *wait, AX_WAIT_COND_FUNC_T func, void *param,unsigned long timeout);
 +#define AX_OSAL_SYNC_wait_event_timeout(wait, func, param, timeout) \
 +({                                  \
 +    int __ret = timeout;                          \
@@ -509,7 +502,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +        {\
 +            break;                    \
 +        }\
-+        __ret = AX_OSAL_SYNC_wait_uninterruptible_timeout(wait, (func), param, __ret);   \
++        __ret = __AX_OSAL_SYNC_wait_uninterruptible_timeout(wait, (func), param, __ret);   \
 +	if(!__ret && !func(param))  \
 +	{\
 +        	__ret = -ETIMEDOUT;   \
@@ -558,6 +551,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +int AX_OSAL_DEV_hrtimer_start(void *timer);
 +int AX_OSAL_DEV_hrtimer_stop(void *timer);
 +
++AX_TIMER_T *AX_OSAL_TMR_alloc_timers(void (*function)(void *), unsigned long data);
 +int AX_OSAL_TMR_init_timers(AX_TIMER_T *timer);
 +unsigned int AX_OSAL_TMR_mod_timer(AX_TIMER_T *timer, unsigned long interval);
 +unsigned int AX_OSAL_TMR_del_timer(AX_TIMER_T *timer);
@@ -605,7 +599,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +void ax_os_mem_kfree(int id, const void *addr);
 +void *ax_os_mem_vmalloc(int id, size_t size);
 +void ax_os_mem_vfree(int id, const void *addr);
-+s32 ax_os_release_reserved_mem(unsigned long phy_start, size_t size, const char *s);
++s32 ax_os_release_reserved_mem(unsigned long phy_start, size_t size, char *s);
 +
 +//file system , only for linux kernel
 +#define AX_OSAL_O_RDONLY         00
@@ -705,9 +699,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +#endif
 +
 +#endif /*__OSAL_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_cmm_ax.h b/drivers/soc/axera/osal/include/osal_cmm_ax.h"
---- a/drivers/soc/axera/osal/include/osal_cmm_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_cmm_ax.h	2024-12-04 17:23:53.979795115 +0800
+--- a/drivers/soc/axera/osal/include/osal_cmm_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_cmm_ax.h	2025-02-14 17:44:16.578266175 +0800
 @@ -0,0 +1,37 @@
 +/**************************************************************************************************
 + *
@@ -746,9 +739,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_cmm_ax.h b/drivers/soc/axera/o
 +#endif
 +
 +#endif /*__OSAL_CMM_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_dev_ax.h b/drivers/soc/axera/osal/include/osal_dev_ax.h"
---- a/drivers/soc/axera/osal/include/osal_dev_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_dev_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_dev_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_dev_ax.h	2025-02-14 17:44:16.578266175 +0800
 @@ -0,0 +1,323 @@
 +/**************************************************************************************************
 + *
@@ -1073,9 +1065,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_dev_ax.h b/drivers/soc/axera/o
 +#endif
 +
 +#endif /*__OSAL_DEV_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_kfifo.h b/drivers/soc/axera/osal/include/osal_kfifo.h"
---- a/drivers/soc/axera/osal/include/osal_kfifo.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_kfifo.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_kfifo.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_kfifo.h	2025-02-14 17:44:16.578266175 +0800
 @@ -0,0 +1,542 @@
 +/**************************************************************************************************
 + *
@@ -1619,9 +1610,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_kfifo.h b/drivers/soc/axera/os
 +unsigned int __ax_kfifo_out_r(struct __ax_kfifo *fifo, void *buf,unsigned int len, size_t recsize);
 +void __ax_kfifo_skip_r(struct __ax_kfifo *fifo, size_t recsize);
 +
-diff -r -u -N drivers/soc/axera/osal/include/osal_lib_ax.h b/drivers/soc/axera/osal/include/osal_lib_ax.h"
---- a/drivers/soc/axera/osal/include/osal_lib_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_lib_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_lib_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_lib_ax.h	2025-02-14 17:44:16.578266175 +0800
 @@ -0,0 +1,102 @@
 +/**************************************************************************************************
 + *
@@ -1725,9 +1715,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_lib_ax.h b/drivers/soc/axera/o
 +
 +#endif /*__OSAL_LIBRARY_AX__H__*/
 +
-diff -r -u -N drivers/soc/axera/osal/include/osal_list_ax.h b/drivers/soc/axera/osal/include/osal_list_ax.h"
---- a/drivers/soc/axera/osal/include/osal_list_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_list_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_list_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_list_ax.h	2025-02-14 17:44:16.582266175 +0800
 @@ -0,0 +1,484 @@
 +/**************************************************************************************************
 + *
@@ -2213,9 +2202,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_list_ax.h b/drivers/soc/axera/
 +#endif
 +
 +#endif /*__OSAL_LIST_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_list.h b/drivers/soc/axera/osal/include/osal_list.h"
---- a/drivers/soc/axera/osal/include/osal_list.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_list.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_list.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_list.h	2025-02-14 17:44:16.582266175 +0800
 @@ -0,0 +1,722 @@
 +/**************************************************************************************************
 + *
@@ -2939,9 +2927,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_list.h b/drivers/soc/axera/osa
 +         pos = n)
 +
 +#endif
-diff -r -u -N drivers/soc/axera/osal/include/osal_logdebug_ax.h b/drivers/soc/axera/osal/include/osal_logdebug_ax.h"
---- a/drivers/soc/axera/osal/include/osal_logdebug_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_logdebug_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_logdebug_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_logdebug_ax.h	2025-02-14 17:44:16.582266175 +0800
 @@ -0,0 +1,90 @@
 +/**************************************************************************************************
 + *
@@ -3033,9 +3020,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_logdebug_ax.h b/drivers/soc/ax
 +#endif
 +
 +#endif /*__OSAL_LOGDEBUG_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_mailbox.h b/drivers/soc/axera/osal/include/osal_mailbox.h"
---- a/drivers/soc/axera/osal/include/osal_mailbox.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_mailbox.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_mailbox.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_mailbox.h	2025-02-14 17:44:16.586266175 +0800
 @@ -0,0 +1,26 @@
 +/**************************************************************************************************
 + *
@@ -3064,9 +3050,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_mailbox.h b/drivers/soc/axera/
 +#endif
 +#endif
 \ 文件尾没有换行符
-diff -r -u -N drivers/soc/axera/osal/include/osal_pm_ax.h b/drivers/soc/axera/osal/include/osal_pm_ax.h"
---- a/drivers/soc/axera/osal/include/osal_pm_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_pm_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_pm_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_pm_ax.h	2025-02-14 17:44:16.586266175 +0800
 @@ -0,0 +1,44 @@
 +/**************************************************************************************************
 + *
@@ -3112,9 +3097,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_pm_ax.h b/drivers/soc/axera/os
 +#endif
 +
 +#endif /*__OSAL_POWER_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_type_ax.h b/drivers/soc/axera/osal/include/osal_type_ax.h"
---- a/drivers/soc/axera/osal/include/osal_type_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_type_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_type_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_type_ax.h	2025-02-14 17:44:16.586266175 +0800
 @@ -0,0 +1,60 @@
 +/**************************************************************************************************
 + *
@@ -3176,9 +3160,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_type_ax.h b/drivers/soc/axera/
 +#endif
 +
 +#endif /*__OSAL_TYPE_AX__H__*/
-diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/osal/include/osal_user_ax.h"
---- a/drivers/soc/axera/osal/include/osal_user_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_user_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/drivers/soc/axera/osal/include/osal_user_ax.h	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/include/osal_user_ax.h	2025-02-14 17:44:16.590266175 +0800
 @@ -0,0 +1,91 @@
 +/**************************************************************************************************
 + *
@@ -3271,9 +3254,50 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +#endif
 +
 +#endif /*__OSAL_USER_AX__H__*/
---- a/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:41.315601787 +0800
-+++ b/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:38.603537514 +0800
-@@ -0,0 +1,6020 @@
+--- a/drivers/soc/axera/osal/Makefile	2025-02-14 17:52:42.414263134 +0800
++++ a/drivers/soc/axera/osal/Makefile	2025-02-14 17:46:07.142265510 +0800
+@@ -0,0 +1,37 @@
++MKFILE_PATH        := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
++LINUXINCLUDE += -I$(MKFILE_PATH)/include 
++obj-y   += osal_axera_core.o
++obj-y   += osal_axera_misc_device.o
++obj-y	+= osal_address.o
++obj-y	+= osal_atomic.o
++obj-y	+= osal_barrier.o
++obj-y	+= osal_cache.o
++obj-y	+= osal_mem.o
++obj-y	+= osal_debug.o
++obj-y	+= osal_fileops.o
++obj-y	+= osal_interrupt.o
++obj-y	+= osal_kmalloc.o
++obj-y	+= osal_math.o
++obj-y	+= osal_mutex.o
++obj-y	+= osal_power.o
++obj-y	+= osal_semaphore.o
++obj-y	+= osal_spinlock.o
++obj-y	+= osal_string.o
++obj-y	+= osal_task.o
++obj-y	+= osal_waitqueue.o
++obj-y	+= osal_workqueue.o
++obj-y	+= osal_timer.o
++obj-y	+= osal_device.o
++obj-y	+= osal_platform.o
++obj-y	+= osal_devtree.o
++obj-y	+= osal_clk.o
++obj-y	+= osal_i2c.o
++obj-y	+= osal_reset.o
++obj-y	+= osal_bwlimiter.o
++obj-y	+= osal_devdfs.o
++obj-y	+= osal_srcu.o
++obj-y	+= osal_prefetch.o
++obj-y   += osal_mailbox.o
++obj-y	+= osal_kfifo.o
++obj-y	+= osal_sort.o
++obj-y	+= osal_percpu.o
+\ 文件尾没有换行符
+--- a/drivers/soc/axera/osal/osal_address.c	2025-02-14 17:57:17.698261479 +0800
++++ a/drivers/soc/axera/osal/osal_address.c	2025-02-14 17:43:04.246266610 +0800
+@@ -0,0 +1,58 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -3332,6 +3356,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_copy_to_user);
+--- a/drivers/soc/axera/osal/osal_atomic.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_atomic.c	2025-02-14 17:43:04.254266609 +0800
+@@ -0,0 +1,172 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -3504,6 +3531,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_atomic_destroy);
+--- a/drivers/soc/axera/osal/osal_axera_core.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_axera_core.c	2025-02-14 17:43:04.258266609 +0800
+@@ -0,0 +1,383 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -3887,6 +3917,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +		kfree(pdrv);
 +	}
 +}
+--- a/drivers/soc/axera/osal/osal_axera_misc_device.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_axera_misc_device.c	2025-02-14 17:43:04.266266609 +0800
+@@ -0,0 +1,232 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4119,6 +4152,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +MODULE_AUTHOR("Axera");
 +MODULE_LICENSE("GPL");
 +MODULE_VERSION("1.1");
+--- a/drivers/soc/axera/osal/osal_barrier.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_barrier.c	2025-02-14 17:43:04.270266609 +0800
+@@ -0,0 +1,68 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4187,6 +4223,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_dmb);
+--- a/drivers/soc/axera/osal/osal_bwlimiter.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_bwlimiter.c	2025-02-14 17:43:04.282266609 +0800
+@@ -0,0 +1,61 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4248,6 +4287,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_bwlimiter_refresh_limiter);
+--- a/drivers/soc/axera/osal/osal_cache.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_cache.c	2025-02-14 17:43:04.286266609 +0800
+@@ -0,0 +1,81 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4329,6 +4371,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_flush_dcache_all);
+--- a/drivers/soc/axera/osal/osal_clk.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_clk.c	2025-02-14 17:43:04.286266609 +0800
+@@ -0,0 +1,106 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4435,6 +4480,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_clk_disable_unprepare);
+--- a/drivers/soc/axera/osal/osal_debug.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_debug.c	2025-02-14 17:43:04.290266609 +0800
+@@ -0,0 +1,278 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4713,6 +4761,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DBG_seq_printf);
+--- a/drivers/soc/axera/osal/osal_devdfs.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_devdfs.c	2025-02-14 17:43:04.298266609 +0800
+@@ -0,0 +1,148 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -4860,7 +4911,12 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return dev_pm_opp_add(dev, freq, volt);
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_DEV_pm_opp_of_add);/**************************************************************************************************
++EXPORT_SYMBOL(AX_OSAL_DEV_pm_opp_of_add);
+\ 文件尾没有换行符
+--- a/drivers/soc/axera/osal/osal_device.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_device.c	2025-02-14 17:43:04.302266609 +0800
+@@ -0,0 +1,757 @@
++/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
 + *
@@ -5616,7 +5672,12 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +		return NULL;
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_DEV_to_dev);/**************************************************************************************************
++EXPORT_SYMBOL(AX_OSAL_DEV_to_dev);
+\ 文件尾没有换行符
+--- a/drivers/soc/axera/osal/osal_devtree.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_devtree.c	2025-02-14 17:43:04.306266609 +0800
+@@ -0,0 +1,65 @@
++/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
 + *
@@ -5646,7 +5707,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +#include "axdev_log.h"
 +
 +
-+int  __attribute__ ((__noinline__)) AX_OSAL_DEV_of_property_read_string(void * pdev, const char *propname,const char **out_string)
++int AX_OSAL_DEV_of_property_read_string(void * pdev, const char *propname,const char **out_string)
 +{
 +	struct platform_device *pvdev = (struct platform_device *)pdev;
 +	struct device *dev = &pvdev->dev;
@@ -5655,45 +5716,6 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_string);
 +
-+#if 0
-+const __attribute__ ((__noinline__))
-+void *AX_OSAL_DEV_of_get_property(void * pdev, const char * name, int * lenp)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_get_property(dev->of_node, name, lenp);
-+}
-+
-+EXPORT_SYMBOL(AX_OSAL_DEV_of_get_property);
-+
-+__attribute__ ((__noinline__))
-+int AX_OSAL_DEV_of_property_read_string_array(void * pdev, const char * propname, const char **out_strs,
-+						 AX_U64 sz)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_property_read_string_array(dev->of_node, propname, out_strs, sz);
-+}
-+
-+__attribute__ ((__noinline__))
-+int AX_OSAL_DEV_of_property_count_strings(void * pdev, const char * propname)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_property_count_strings(dev->of_node, propname);
-+}
-+
-+__attribute__ ((__noinline__))
-+int AX_OSAL_DEV_of_property_read_string_index(void * pdev, const char * propname, int index,
-+						 const char **output)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_property_read_string_index(dev->of_node, propname, index, output);
-+}
-+#endif
-+
-+__attribute__ ((__noinline__))
 +bool AX_OSAL_DEV_of_property_read_bool(void * pdev, const char * propname)
 +{
 +	struct platform_device *pvdev = (struct platform_device *)pdev;
@@ -5703,28 +5725,6 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_bool);
 +
-+#if 0
-+__attribute__ ((__noinline__))
-+int AX_OSAL_DEV_of_property_read_u8(void * pdev, const char * propname, char * out_value)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_property_read_u8(dev->of_node, propname, out_value);
-+}
-+
-+EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_u8);
-+__attribute__ ((__noinline__))
-+int AX_OSAL_DEV_of_property_read_u16(void * pdev, const char * propname, AX_U16 * out_value)
-+{
-+	struct platform_device *pvdev = (struct platform_device *)pdev;
-+	struct device *dev = &pvdev->dev;
-+	return of_property_read_u16(dev->of_node, propname, out_value);
-+}
-+
-+EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_u16);
-+#endif
-+
-+__attribute__ ((__noinline__))
 +int AX_OSAL_DEV_of_property_read_u32(void * pdev, const char *propname, unsigned int * out_value)
 +{
 +	struct platform_device *pvdev = (struct platform_device *)pdev;
@@ -5734,7 +5734,6 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_u32);
 +
-+__attribute__ ((__noinline__))
 +int AX_OSAL_DEV_of_property_read_s32(void * pdev, const char * propname, int * out_value)
 +{
 +	struct platform_device *pvdev = (struct platform_device *)pdev;
@@ -5743,6 +5742,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_of_property_read_s32);
+--- a/drivers/soc/axera/osal/osal_fileops.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_fileops.c	2025-02-14 17:43:04.306266609 +0800
+@@ -0,0 +1,56 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -5799,6 +5801,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_FS_filp_read);
+--- a/drivers/soc/axera/osal/osal_i2c.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_i2c.c	2025-02-14 17:43:04.314266609 +0800
+@@ -0,0 +1,183 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -5982,6 +5987,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_i2c_dev_exit);
+--- a/drivers/soc/axera/osal/osal_interrupt.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_interrupt.c	2025-02-14 17:43:04.318266609 +0800
+@@ -0,0 +1,86 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -6068,6 +6076,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_irq_set_irqchip_state);
+--- a/drivers/soc/axera/osal/osal_kfifo.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_kfifo.c	2025-02-14 17:43:04.322266609 +0800
+@@ -0,0 +1,372 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -6440,6 +6451,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(__ax_kfifo_skip_r);
+--- a/drivers/soc/axera/osal/osal_kmalloc.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_kmalloc.c	2025-02-14 17:43:04.322266609 +0800
+@@ -0,0 +1,129 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -6569,6 +6583,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +    return vm_munmap(start, size);
 +}
 +EXPORT_SYMBOL(AX_OSAL_MEM_AddrMunmap);
+--- a/drivers/soc/axera/osal/osal_mailbox.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_mailbox.c	2025-02-14 17:43:04.326266609 +0800
+@@ -0,0 +1,39 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -6607,7 +6624,12 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return 0;
 +}
 +EXPORT_SYMBOL(AX_OSAL_mailbox_send_message);
-+#endif/**************************************************************************************************
++#endif
+\ 文件尾没有换行符
+--- a/drivers/soc/axera/osal/osal_math.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_math.c	2025-02-14 17:43:04.334266609 +0800
+@@ -0,0 +1,86 @@
++/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
 + *
@@ -6693,6 +6715,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_LIB_random);
+--- a/drivers/soc/axera/osal/osal_mem.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_mem.c	2025-02-14 17:43:04.338266609 +0800
+@@ -0,0 +1,164 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -6857,6 +6882,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +EXPORT_SYMBOL(AX_OSAL_DEV_kernel_virt_to_phys);
 +
+--- a/drivers/soc/axera/osal/osal_mutex.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_mutex.c	2025-02-14 17:43:04.338266609 +0800
+@@ -0,0 +1,188 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7045,6 +7073,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +EXPORT_SYMBOL(AX_OSAL_SYNC_rt_mutex_destroy);
 +
+--- a/drivers/soc/axera/osal/osal_percpu.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_percpu.c	2025-02-14 17:43:04.342266609 +0800
+@@ -0,0 +1,47 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7092,6 +7123,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	free_percpu(ptr);
 +}
 +EXPORT_SYMBOL(AX_OSAL_free_percpu_u32);
+--- a/drivers/soc/axera/osal/osal_platform.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_platform.c	2025-02-14 17:43:04.350266609 +0800
+@@ -0,0 +1,372 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7464,6 +7498,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_to_platform_driver);
+--- a/drivers/soc/axera/osal/osal_power.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_power.c	2025-02-14 17:43:04.354266609 +0800
+@@ -0,0 +1,44 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7508,6 +7545,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_PM_GetLevel);
+--- a/drivers/soc/axera/osal/osal_prefetch.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_prefetch.c	2025-02-14 17:43:04.354266609 +0800
+@@ -0,0 +1,23 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7531,6 +7571,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	prefetchw(addr);
 +}
 +EXPORT_SYMBOL(AX_OSAL_prefetchw);
+--- a/drivers/soc/axera/osal/osal_reset.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_reset.c	2025-02-14 17:43:04.358266609 +0800
+@@ -0,0 +1,57 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7573,7 +7616,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_devm_reset_control_get_optional);
 +
-+int __attribute__ ((__noinline__)) AX_OSAL_DEV_reset_control_assert(void * rstc)
++int AX_OSAL_DEV_reset_control_assert(void * rstc)
 +{
 +	struct reset_control *prstc = (struct reset_control *)rstc;
 +	return reset_control_assert(prstc);
@@ -7581,13 +7624,16 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_reset_control_assert);
 +
-+int __attribute__ ((__noinline__)) AX_OSAL_DEV_reset_control_deassert(void * rstc)
++int AX_OSAL_DEV_reset_control_deassert(void * rstc)
 +{
 +	struct reset_control *prstc = (struct reset_control *)rstc;
 +	return reset_control_deassert(prstc);
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_reset_control_deassert);
+--- a/drivers/soc/axera/osal/osal_semaphore.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_semaphore.c	2025-02-14 17:43:04.366266609 +0800
+@@ -0,0 +1,108 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7696,6 +7742,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_sema_destroy);
+--- a/drivers/soc/axera/osal/osal_sort.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_sort.c	2025-02-14 17:43:04.370266609 +0800
+@@ -0,0 +1,270 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -7966,6 +8015,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return AX_OSAL_LIB_sort_r(base, num, size, _CMP_WRAPPER, swap_func, cmp_func);
 +}
 +EXPORT_SYMBOL(AX_OSAL_LIB_sort);
+--- a/drivers/soc/axera/osal/osal_spinlock.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_spinlock.c	2025-02-14 17:43:04.370266609 +0800
+@@ -0,0 +1,128 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8094,6 +8146,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_spinLock_destory);
+--- a/drivers/soc/axera/osal/osal_srcu.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_srcu.c	2025-02-14 17:43:04.374266609 +0800
+@@ -0,0 +1,114 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8208,6 +8263,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	synchronize_srcu(p);
 +}
 +EXPORT_SYMBOL(AX_OSAL_synchronize_srcu);
+--- a/drivers/soc/axera/osal/osal_string.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_string.c	2025-02-14 17:43:04.382266609 +0800
+@@ -0,0 +1,303 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8511,6 +8569,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_LIB_vsnprintf);
+--- a/drivers/soc/axera/osal/osal_task.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_task.c	2025-02-14 17:43:04.386266609 +0800
+@@ -0,0 +1,129 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8640,6 +8701,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_get_current);
+--- a/drivers/soc/axera/osal/osal_timer.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_timer.c	2025-02-14 17:43:04.390266609 +0800
+@@ -0,0 +1,236 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8676,6 +8740,22 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +		axTimer->function((void *) axTimer->data);
 +	return;
 +}
++
++AX_TIMER_T *AX_OSAL_TMR_alloc_timers(void (*function)(void *), unsigned long data)
++{
++	AX_TIMER_T *axTimer;
++	axTimer = kzalloc(sizeof(AX_TIMER_T), GFP_KERNEL);
++	if(axTimer == NULL) {
++		printk("%s alloc failed\n", __func__);
++		return NULL;
++	}
++
++	axTimer->function = function;
++	axTimer->data = data;
++	return axTimer;
++}
++
++EXPORT_SYMBOL(AX_OSAL_TMR_alloc_timers);
 +
 +int AX_OSAL_TMR_init_timers(AX_TIMER_T * axTimer)
 +{
@@ -8716,6 +8796,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +int AX_OSAL_TMR_destory_timer(AX_TIMER_T * axTimer)
 +{
 +	del_timer(&axTimer->timer);
++	kfree(axTimer);
 +	return 0;
 +}
 +
@@ -8787,7 +8868,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_TM_do_gettimeofday);
 +
-+ long __attribute__ ((__noinline__)) AX_OSAL_TM_msecs_to_jiffies( long ax_msecs)
++ long AX_OSAL_TM_msecs_to_jiffies( long ax_msecs)
 +{
 +	long tmp_msecs = msecs_to_jiffies(ax_msecs);
 +	return tmp_msecs;
@@ -8859,7 +8940,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_DEV_hrtimer_stop);
-+
+--- a/drivers/soc/axera/osal/osal_waitqueue.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_waitqueue.c	2025-02-14 17:43:04.402266609 +0800
+@@ -0,0 +1,246 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -8899,7 +8982,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_waitqueue_init);
 +
-+unsigned int AX_OSAL_SYNC_wait_uninterruptible(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param)
++unsigned int __AX_OSAL_SYNC_wait_uninterruptible(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param)
 +{
 +	wait_queue_head_t *wq;
 +	DEFINE_WAIT(__wait);
@@ -8930,9 +9013,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return ret;
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_SYNC_wait_uninterruptible);
++EXPORT_SYMBOL(__AX_OSAL_SYNC_wait_uninterruptible);
 +
-+unsigned int AX_OSAL_SYNC_wait_interruptible(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param)
++unsigned int __AX_OSAL_SYNC_wait_interruptible(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param)
 +{
 +	wait_queue_head_t *wq;
 +	DEFINE_WAIT(__wait);
@@ -8970,9 +9053,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_SYNC_wait_interruptible);
++EXPORT_SYMBOL(__AX_OSAL_SYNC_wait_interruptible);
 +
-+unsigned int AX_OSAL_SYNC_wait_uninterruptible_timeout(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param,
++unsigned int __AX_OSAL_SYNC_wait_uninterruptible_timeout(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param,
 +						 unsigned long timeout)
 +{
 +	wait_queue_head_t *wq;
@@ -9005,9 +9088,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return ret;
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_SYNC_wait_uninterruptible_timeout);
++EXPORT_SYMBOL(__AX_OSAL_SYNC_wait_uninterruptible_timeout);
 +
-+unsigned int AX_OSAL_SYNC_wait_interruptible_timeout(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param,
++unsigned int __AX_OSAL_SYNC_wait_interruptible_timeout(AX_WAIT_T * wait, AX_WAIT_COND_FUNC_T func, void * param,
 +					       unsigned long timeout)
 +{
 +	wait_queue_head_t *wq;
@@ -9044,7 +9127,7 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +	return ret;
 +}
 +
-+EXPORT_SYMBOL(AX_OSAL_SYNC_wait_interruptible_timeout);
++EXPORT_SYMBOL(__AX_OSAL_SYNC_wait_interruptible_timeout);
 +
 +void AX_OSAL_SYNC_wakeup(AX_WAIT_T * wait, void * key)
 +{
@@ -9106,6 +9189,9 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_wait_destroy);
+--- a/drivers/soc/axera/osal/osal_workqueue.c	2025-02-14 17:52:42.418263134 +0800
++++ a/drivers/soc/axera/osal/osal_workqueue.c	2025-02-14 17:43:04.406266609 +0800
+@@ -0,0 +1,188 @@
 +/**************************************************************************************************
 + *
 + * Copyright (c) 2019-2024 Axera Semiconductor Co., Ltd. All Rights Reserved.
@@ -9294,14 +9380,6 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +}
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_destroy_delayed_work);
-diff -r -u -N drivers/soc/axera/osal/Makefile b/drivers/soc/axera/osal/Makefile"
---- a/drivers/soc/axera/osal/Makefile	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/Makefile	2024-12-04 17:23:53.979795115 +0800
-@@ -0,0 +1,3 @@
-+MKFILE_PATH        := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-+LINUXINCLUDE += -I$(MKFILE_PATH)/include 
-+obj-y   += osal_all_code.o
-\ 文件尾没有换行符
 --- a/drivers/soc/axera/Makefile	2024-12-09 15:05:24.974888043 +0800
 +++ b/drivers/soc/axera/Makefile	2024-12-09 15:05:11.282647558 +0800
 @@ -12,8 +12,8 @@
