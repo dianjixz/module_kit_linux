@@ -9,6 +9,8 @@ DTSS := $(wildcard linux-dts/*.dts*)
 CONFIG_FILES := $(wildcard *.config)
 LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
 LINUX_TAR_NAME := $(LINUX_TAR_SHA)-linux-4.19.125.tar.gz
+LINUX_TAR_URL := https://mirror.tuna.tsinghua.edu.cn/kernel/v4.x/linux-4.19.125.tar.gz
+
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
@@ -39,7 +41,7 @@ Configuring:Patching
 build/check_build.tmp:$(PATCHES)
 	[ -d 'build' ] || mkdir build
 	@if [ -f '.stamp_extracted' ] ; then \
-		[ -f '../../../dl/$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '../../../dl/$(LINUX_TAR_NAME)' 'https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz' ; \
+		[ -f '../../../dl/$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '../../../dl/$(LINUX_TAR_NAME)' '$(LINUX_TAR_URL)' ; \
 		calculated_hash=$$(sha256sum ../../../dl/$(LINUX_TAR_NAME) | awk '{ print $$1 }'); \
 		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
 			rm ../../../dl/$(LINUX_TAR_NAME) ; \
@@ -47,7 +49,7 @@ build/check_build.tmp:$(PATCHES)
 		fi ; \
 		[ -d 'build/linux-4.19.125' ] || tar zxf ../../../dl/$(LINUX_TAR_NAME) -C build/ ; \
 	else \
-		[ -f '.$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '.$(LINUX_TAR_NAME)' 'https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz' ; \
+		[ -f '.$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '.$(LINUX_TAR_NAME)' '$(LINUX_TAR_URL)' ; \
 		calculated_hash=$$(sha256sum .$(LINUX_TAR_NAME) | awk '{ print $$1 }'); \
 		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
 			rm .$(LINUX_TAR_NAME) ; \
