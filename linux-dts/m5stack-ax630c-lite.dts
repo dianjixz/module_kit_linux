@@ -783,7 +783,7 @@
 	status = "okay";
 };
 
-#if 0
+/*
 // st7703
 &panel_dsi {
 	pinctrl-names = "default";
@@ -858,28 +858,22 @@
 		};
 	};
 };
-#else
+*/
+// /*
 // ili9881c
 &panel_dsi {
-	pinctrl-names = "default";
-	pinctrl-0 = <&cdtx_l0p_pins>, <&cdtx_l0n_pins>,
-				<&cdtx_l1p_pins>, <&cdtx_l1n_pins>,
-				<&cdtx_l2p_pins>, <&cdtx_l2n_pins>,
-				<&cdtx_l3p_pins>, <&cdtx_l3n_pins>,
-				<&cdtx_l4p_pins>, <&cdtx_l4n_pins>;
 	prepare-delay-ms = <0>;
 	unprepare-delay-ms = <0>;
 	enable-delay-ms = <0>;
-	disable-delay-ms = <150>;
+	disable-delay-ms = <0>;
 	// reset-gpio = <&ax_gpio1 0 0>;
 	reset-gpio = <&pi4ioe5v6408 2 0>;
 	backlight = <&backlight>;
 	dsi,format = <MIPI_DSI_FMT_RGB888>;
 	dsi,lanes = <2>;
 	dsi,flags = <(MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST | MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET)>;
-
-	panel-init-seq = [  05 FF 01 01 
-						05 00 01 28
+	// 05 FF 01 01 
+	panel-init-seq = [  05 00 01 28
 						39 00 04 FF 98 81 03 
 						15 00 02 01 00 
 						15 00 02 02 00 
@@ -1069,7 +1063,7 @@
 						05 FF 01 11 
 						05 C8 01 29 ];
 	// panel-exit-seq = [05 00 01 10];
-	panel-exit-seq = [05 00 01 28];
+	panel-exit-seq = [05 00 01 28 05 00 01 10];
 	// dsi-panel_esd_check_enable = /bits/ 8 <0>;
 	// dsi-panel-check-mode = /bits/ 8 <0>;
 	// dsi-panel-read-reg = /bits/ 8 <0x0A>;
@@ -1081,12 +1075,12 @@
 	display-timings {
 		native-mode = <&timing0>;
 		timing0: mipi0 {
-			clock-frequency = <55500000>;
+			clock-frequency = <27000000>;
 			hactive = <720>;
 			vactive = <1280>;
 			hfront-porch = <40>;
-			hsync-len = <40>;
-			hback-porch = <140>;
+			hsync-len = <4>;
+			hback-porch = <40>;
 			vfront-porch = <16>;
 			vsync-len = <4>;
 			vback-porch = <16>;
@@ -1098,8 +1092,42 @@
 		};
 	};
 };
-#endif
+// */
+/*
+// mipi2hdmi
+&panel_dsi {
+	prepare-delay-ms = <0>;
+	unprepare-delay-ms = <0>;
+	enable-delay-ms = <0>;
+	disable-delay-ms = <0>;
+	dsi,format = <MIPI_DSI_FMT_RGB888>;
+	dsi,lanes = <2>;
+	dsi,flags = <(MIPI_DSI_MODE_VIDEO_SYNC_PULSE | MIPI_DSI_MODE_VIDEO)>;
 
+	panel-init-seq = [];
+	panel-exit-seq = [];
+	status = "okay";
+	display-timings {
+		native-mode = <&timing0>;
+		timing0: mipi0 {
+			clock-frequency = <74250000>;
+			hactive = <720>;
+			vactive = <1280>;
+			hfront-porch = <40>;
+			hsync-len = <10>;
+			hback-porch = <40>;
+			vfront-porch = <16>;
+			vsync-len = <4>;
+			vback-porch = <16>;
+
+			hsync-active = <0>;
+			vsync-active = <0>;
+			de-active = <0>;
+			pixelclk-active = <0>;
+		};
+	};
+};
+*/
 
 
 
