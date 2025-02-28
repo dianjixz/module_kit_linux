@@ -3,13 +3,13 @@
 # SPDX-License-Identifier: MIT
 
 PATCH_DIR := patches
-SRC_DIR := build/linux-4.19.125
+SRC_DIR := build/linux-5.15.73.tar.gz
 PATCHES := $(wildcard patches/*.patch)
 DTSS := $(wildcard linux-dts/*.dts*)
 CONFIG_FILES := $(wildcard *.config)
-LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
-LINUX_TAR_NAME := $(LINUX_TAR_SHA)-linux-4.19.125.tar.gz
-LINUX_TAR_URL := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz
+LINUX_TAR_SHA := 380a230cea3819eb2640aa4f4719237aefa60aecf18ce434f15d8fc0ab0b0a65
+LINUX_TAR_NAME := $(LINUX_TAR_SHA)-linux-5.15.73.tar.gz
+LINUX_TAR_URL := https://mirror.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.15.73.tar.gz
 
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
@@ -47,7 +47,7 @@ build/check_build.tmp:$(PATCHES)
 			rm ../../../dl/$(LINUX_TAR_NAME) ; \
 			exit 1; \
 		fi ; \
-		[ -d 'build/linux-4.19.125' ] || tar zxf ../../../dl/$(LINUX_TAR_NAME) -C build/ ; \
+		[ -d '$(SRC_DIR)' ] || tar zxf ../../../dl/$(LINUX_TAR_NAME) -C build/ ; \
 	else \
 		[ -f '.$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '.$(LINUX_TAR_NAME)' '$(LINUX_TAR_URL)' ; \
 		calculated_hash=$$(sha256sum .$(LINUX_TAR_NAME) | awk '{ print $$1 }'); \
@@ -55,7 +55,7 @@ build/check_build.tmp:$(PATCHES)
 			rm .$(LINUX_TAR_NAME) ; \
 			exit 1; \
 		fi ; \
-		[ -d 'build/linux-4.19.125' ] || tar zxf .$(LINUX_TAR_NAME) -C build/ ; \
+		[ -d '$(SRC_DIR)' ] || tar zxf .$(LINUX_TAR_NAME) -C build/ ; \
 	fi
 	@[ -L 'arch' ] || ln -s $(SRC_DIR)/arch arch
 	@[ -L 'scripts' ] || ln -s $(SRC_DIR)/scripts scripts
@@ -69,7 +69,7 @@ build/check_dts.tmp:$(DTSS)
 	@touch build/check_dts.tmp
 
 build/check_patch.tmp:$(PATCHES)
-	@[ -d 'build/linux-4.19.125/arch/arm64/boot/dts/axera' ] || {\
+	@[ -d '$(SRC_DIR)/arch/arm64/boot/dts/axera' ] || {\
 		for patch in $^; do \
 			echo "Applying $$patch..."; \
 			patch -p1 -d $(SRC_DIR) <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
