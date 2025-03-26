@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 PATCH_DIR := patches
-SRC_DIR := build/linux-5.15.73.tar.gz
+SRC_DIR := build/linux-5.15.73
 PATCHES := $(wildcard patches/*.patch)
 DTSS := $(wildcard linux-dts/*.dts*)
 CONFIG_FILES := $(wildcard *.config)
@@ -79,7 +79,7 @@ build/check_patch.tmp:$(PATCHES)
 	@touch build/check_patch.tmp
 
 build/check_config.tmp:$(CONFIG_FILES)
-	@[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k419_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig ; }
+	@[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k515_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k515_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k515_defconfig ; }
 	@rm -f build/check_config.tmp
 	@touch build/check_config.tmp
 

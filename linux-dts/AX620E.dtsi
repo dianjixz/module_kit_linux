@@ -15,9 +15,8 @@
 #include <dt-bindings/display/axera_display.h>
 #include <dt-bindings/phy/jlsemi-dt-phy.h>
 #include <dt-bindings/phy/axera-dt-phy.h>
-#include "AX620E_opptable.dtsi"
 #include <dt-bindings/memory/AX620E_reserve_mem_define.h>
-#include <dt-bindings/display/panel-tp2803.h>
+#include "AX620E_opptable.dtsi"
 
 / {
 	compatible = "axera,ax620e";
@@ -85,7 +84,6 @@
 		compatible = "arm,psci-1.0";
 		method = "smc";
 	};
-
 #ifdef OPTEE_BOOT
 	firmware {
 		optee {
@@ -94,15 +92,13 @@
 		};
 	};
 #endif
-
 	timer {
-		compatible = "arm,armv7-timer";
-		arm,cpu-registers-not-fw-configured;
+		compatible = "arm,armv8-timer";
 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>,
 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>,
 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>,
 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>;
-		clock-frequency = <24000000>;
+		clock_frequency = <24000000>;
 	};
 
 	gic: interrupt-controller@0x1850000 {
@@ -116,6 +112,13 @@
 		      <0x0 0x1854000 0x0 0x2000>,
 		      <0x0 0x1856000 0x0 0x2000>;
 	};
+
+	arm-pmu {
+     		compatible = "arm,cortex-a53-pmu";
+     		interrupts = <GIC_SPI 1 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+     		interrupt-affinity = <&cpu0>, <&cpu1>;
+ 	};
 
 	soc {
 		#address-cells = <2>;
@@ -370,7 +373,7 @@
 		};
 		hwinfo: hwinfo {
 			compatible = "ax,ax_hwinfo";
-			status = "disabled";
+			status = "okay";
 		};
 		wdt0: watchdog@4840000 {
 			compatible = "axera,ax-wdt";
@@ -1072,7 +1075,7 @@
 			clocks = <&common_clk AX620X_ACLK_CPU_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_cpu_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		aclk_isp_top:aclk_isp_top {
@@ -1080,7 +1083,7 @@
 			clocks = <&common_clk AX620X_ACLK_ISP_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_isp_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		aclk_vpu_top:aclk_vpu_top {
@@ -1088,7 +1091,7 @@
 			clocks = <&common_clk AX620X_ACLK_VPU_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_vpu_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		aclk_ocm_top:aclk_ocm_top {
@@ -1096,7 +1099,7 @@
 			clocks = <&common_clk AX620X_ACLK_OCM_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_ocm_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		aclk_nn_top:aclk_nn_top {
@@ -1104,7 +1107,7 @@
 			clocks = <&common_clk AX620X_ACLK_NN_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_nn_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		aclk_mm_top:aclk_mm_top {
@@ -1112,7 +1115,7 @@
 			clocks = <&common_clk AX620X_ACLK_MM_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&aclk_mm_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		clk_isp_mm:clk_isp_mm {
@@ -1120,7 +1123,7 @@
 			clocks = <&common_clk AX620X_CLK_ISP_MM_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&clk_isp_mm_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		pclk_top:pclk_top {
@@ -1128,7 +1131,7 @@
 			clocks = <&common_clk AX620X_PCLK_TOP_SEL>;
 			clock-names = "bus_clk";
 			operating-points-v2 = <&pclk_top_dfs>;
-			status = "disabled";
+			status = "okay";
 		};
 
 		isp: isp@2400000 {
@@ -1326,7 +1329,7 @@
 
 		bwlimiter: bwlimiter {
 			compatible = "axera,bw_limiter";
-			status = "okay";
+			status = "disabled";
 		};
 
 		ive: ive@4406000 {
@@ -1830,20 +1833,6 @@
 					panel_in_0: endpoint@0 {
 						remote-endpoint = <&virt_out_0>;
 					};
-				};
-			};
-		};
-
-		panel1: panel@1 {
-			compatible = "axera,simple-panel";
-			id = <1>;
-			status = "disabled";
-
-			ports {
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				port@0 {
 					panel_in_1: endpoint@1 {
 						remote-endpoint = <&virt_out_1>;
 					};

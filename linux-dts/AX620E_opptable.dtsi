@@ -304,8 +304,8 @@
 
 	ddr_dfs_table: ddr_dfs_table {
 		compatible = "operating-points-v2";
-		ddr-3200 {
-			opp-hz = /bits/ 64 <3200>;
+		ddr-2400 {
+			opp-hz = /bits/ 64 <2400>;
 		};
 		ddr-1600 {
 			opp-hz = /bits/ 64 <1600>;

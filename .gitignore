@@ -1,11 +1,8 @@
 build
-.linux-4.19.125.tar.gz
 arch
 scripts
 include
 .vscode
 boot_signed.bin
-AX630C_emmc_arm64_k419_signed.dtb
-.839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1-linux-4.19.125.tar.gz
-linux-4.19.125.tar.gz
-linux-5.15.73.tar.gz
+AX630C_emmc_arm64_k*_signed.dtb
+*linux-*.tar.gz

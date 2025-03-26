@@ -1,0 +1,10 @@
+--- a/drivers/input/touchscreen/goodix.c	2022-10-12 15:53:28.000000000 +0800
++++ b/drivers/input/touchscreen/goodix.c	2025-03-26 13:53:34.993571636 +0800
+@@ -858,6 +858,7 @@
+ 	}
+ 
+ 	ts->gpiod_int = gpiod;
++	ts->client->irq = gpiod_to_irq(gpiod);
+ 
+ 	/* Get the reset line GPIO pin number */
+ 	gpiod = devm_gpiod_get_optional(dev, GOODIX_GPIO_RST_NAME, ts->gpiod_rst_flags);
