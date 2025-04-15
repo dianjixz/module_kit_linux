@@ -146,15 +146,36 @@
 	};
 
 
-	// vfb0: vfb@0 {
-	// 	compatible = "axera,vfb";
-	// 	id = <0>;
-	// 	width = <720>;
-	// 	height = <1280>;
-	// 	bpp = <24>;
-	// 	buf-num = <2>;
-	// 	status = "okay";
-	// };
+	vfb0: vfb@0 {
+		compatible = "axera,vfb";
+		id = <0>;
+		width = <720>;
+		height = <1280>;
+		bpp = <32>;
+		buf-num = <2>;
+		status = "okay";
+	};
+
+	vfb1: vfb@1 {
+		compatible = "axera,vfb";
+		id = <1>;
+		width = <720>;
+		height = <1280>;
+		bpp = <32>;
+		buf-num = <2>;
+		status = "okay";
+	};
+
+	vfb2: vfb@2 {
+		compatible = "axera,vfb";
+		id = <2>;
+		width = <64>;
+		height = <64>;
+		bpp = <32>;
+		buf-num = <1>;
+		cursor;
+		status = "okay";
+	};
 
 };
 
