@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
 #
 # SPDX-License-Identifier: MIT
-
+SDK_VERSION := V2.0.0_P7_20240513101106
 PATCH_DIR := patches
 SRC_DIR := build/linux-4.19.125
 PATCHES := $(wildcard patches/*.patch)
@@ -72,7 +72,7 @@ build/check_patch.tmp:$(PATCHES)
 	@[ -d 'build/linux-4.19.125/arch/arm64/boot/dts/axera' ] || {\
 		for patch in $^; do \
 			echo "Applying $$patch..."; \
-			patch -p1 -d $(SRC_DIR) <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
+			patch -p1 -d build <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
 		done ; \
 	}
 	@rm -f build/check_patch.tmp

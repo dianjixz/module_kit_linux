@@ -1,6 +1,6 @@
 diff -r -u -N drivers/soc/axera/osal/include/axdev.h b/drivers/soc/axera/osal/include/axdev.h"
---- a/drivers/soc/axera/osal/include/axdev.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/axdev.h	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/axdev.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/axdev.h	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,95 @@
 +/**************************************************************************************************
 + *
@@ -98,8 +98,8 @@ diff -r -u -N drivers/soc/axera/osal/include/axdev.h b/drivers/soc/axera/osal/in
 +
 +#endif /*_LINUX_AXDEV_DEVICE_H_*/
 diff -r -u -N drivers/soc/axera/osal/include/axdev_log.h b/drivers/soc/axera/osal/include/axdev_log.h"
---- a/drivers/soc/axera/osal/include/axdev_log.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/axdev_log.h	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/axdev_log.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/axdev_log.h	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,41 @@
 +/**************************************************************************************************
 + *
@@ -143,8 +143,8 @@ diff -r -u -N drivers/soc/axera/osal/include/axdev_log.h b/drivers/soc/axera/osa
 +#define AXDEV_LOG_ERROR     AXDEV_LOG_ERR
 +#endif
 diff -r -u -N drivers/soc/axera/osal/include/base.h b/drivers/soc/axera/osal/include/base.h"
---- a/drivers/soc/axera/osal/include/base.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/base.h	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/base.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/base.h	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,26 @@
 +/**************************************************************************************************
 + *
@@ -173,8 +173,8 @@ diff -r -u -N drivers/soc/axera/osal/include/base.h b/drivers/soc/axera/osal/inc
 +
 +#endif
 diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/include/osal_ax.h"
---- a/drivers/soc/axera/osal/include/osal_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_ax.h	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_ax.h	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,529 @@
 +/**************************************************************************************************
 + *
@@ -706,8 +706,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_ax.h b/drivers/soc/axera/osal/
 +
 +#endif /*__OSAL_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_cmm_ax.h b/drivers/soc/axera/osal/include/osal_cmm_ax.h"
---- a/drivers/soc/axera/osal/include/osal_cmm_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_cmm_ax.h	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_cmm_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_cmm_ax.h	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,37 @@
 +/**************************************************************************************************
 + *
@@ -747,8 +747,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_cmm_ax.h b/drivers/soc/axera/o
 +
 +#endif /*__OSAL_CMM_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_dev_ax.h b/drivers/soc/axera/osal/include/osal_dev_ax.h"
---- a/drivers/soc/axera/osal/include/osal_dev_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_dev_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_dev_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_dev_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,323 @@
 +/**************************************************************************************************
 + *
@@ -1074,8 +1074,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_dev_ax.h b/drivers/soc/axera/o
 +
 +#endif /*__OSAL_DEV_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_kfifo.h b/drivers/soc/axera/osal/include/osal_kfifo.h"
---- a/drivers/soc/axera/osal/include/osal_kfifo.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_kfifo.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_kfifo.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_kfifo.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,542 @@
 +/**************************************************************************************************
 + *
@@ -1620,8 +1620,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_kfifo.h b/drivers/soc/axera/os
 +void __ax_kfifo_skip_r(struct __ax_kfifo *fifo, size_t recsize);
 +
 diff -r -u -N drivers/soc/axera/osal/include/osal_lib_ax.h b/drivers/soc/axera/osal/include/osal_lib_ax.h"
---- a/drivers/soc/axera/osal/include/osal_lib_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_lib_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_lib_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_lib_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,102 @@
 +/**************************************************************************************************
 + *
@@ -1726,8 +1726,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_lib_ax.h b/drivers/soc/axera/o
 +#endif /*__OSAL_LIBRARY_AX__H__*/
 +
 diff -r -u -N drivers/soc/axera/osal/include/osal_list_ax.h b/drivers/soc/axera/osal/include/osal_list_ax.h"
---- a/drivers/soc/axera/osal/include/osal_list_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_list_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_list_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_list_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,484 @@
 +/**************************************************************************************************
 + *
@@ -2214,8 +2214,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_list_ax.h b/drivers/soc/axera/
 +
 +#endif /*__OSAL_LIST_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_list.h b/drivers/soc/axera/osal/include/osal_list.h"
---- a/drivers/soc/axera/osal/include/osal_list.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_list.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_list.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_list.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,722 @@
 +/**************************************************************************************************
 + *
@@ -2940,8 +2940,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_list.h b/drivers/soc/axera/osa
 +
 +#endif
 diff -r -u -N drivers/soc/axera/osal/include/osal_logdebug_ax.h b/drivers/soc/axera/osal/include/osal_logdebug_ax.h"
---- a/drivers/soc/axera/osal/include/osal_logdebug_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_logdebug_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_logdebug_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_logdebug_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,90 @@
 +/**************************************************************************************************
 + *
@@ -3034,8 +3034,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_logdebug_ax.h b/drivers/soc/ax
 +
 +#endif /*__OSAL_LOGDEBUG_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_mailbox.h b/drivers/soc/axera/osal/include/osal_mailbox.h"
---- a/drivers/soc/axera/osal/include/osal_mailbox.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_mailbox.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_mailbox.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_mailbox.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,26 @@
 +/**************************************************************************************************
 + *
@@ -3065,8 +3065,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_mailbox.h b/drivers/soc/axera/
 +#endif
 \ 文件尾没有换行符
 diff -r -u -N drivers/soc/axera/osal/include/osal_pm_ax.h b/drivers/soc/axera/osal/include/osal_pm_ax.h"
---- a/drivers/soc/axera/osal/include/osal_pm_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_pm_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_pm_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_pm_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,44 @@
 +/**************************************************************************************************
 + *
@@ -3113,8 +3113,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_pm_ax.h b/drivers/soc/axera/os
 +
 +#endif /*__OSAL_POWER_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_type_ax.h b/drivers/soc/axera/osal/include/osal_type_ax.h"
---- a/drivers/soc/axera/osal/include/osal_type_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_type_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_type_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_type_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,60 @@
 +/**************************************************************************************************
 + *
@@ -3177,8 +3177,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_type_ax.h b/drivers/soc/axera/
 +
 +#endif /*__OSAL_TYPE_AX__H__*/
 diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/osal/include/osal_user_ax.h"
---- a/drivers/soc/axera/osal/include/osal_user_ax.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/include/osal_user_ax.h	2024-12-04 17:23:53.983795199 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/include/osal_user_ax.h	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/include/osal_user_ax.h	2024-12-04 17:23:53.983795199 +0800
 @@ -0,0 +1,91 @@
 +/**************************************************************************************************
 + *
@@ -3271,8 +3271,8 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +#endif
 +
 +#endif /*__OSAL_USER_AX__H__*/
---- a/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:41.315601787 +0800
-+++ b/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:38.603537514 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:41.315601787 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/osal_all_code.c	2024-12-12 16:50:38.603537514 +0800
 @@ -0,0 +1,6020 @@
 +/**************************************************************************************************
 + *
@@ -9295,15 +9295,15 @@ diff -r -u -N drivers/soc/axera/osal/include/osal_user_ax.h b/drivers/soc/axera/
 +
 +EXPORT_SYMBOL(AX_OSAL_SYNC_destroy_delayed_work);
 diff -r -u -N drivers/soc/axera/osal/Makefile b/drivers/soc/axera/osal/Makefile"
---- a/drivers/soc/axera/osal/Makefile	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/soc/axera/osal/Makefile	2024-12-04 17:23:53.979795115 +0800
+--- a/linux-4.19.125/drivers/soc/axera/osal/Makefile	1970-01-01 08:00:00.000000000 +0800
++++ b/linux-4.19.125/drivers/soc/axera/osal/Makefile	2024-12-04 17:23:53.979795115 +0800
 @@ -0,0 +1,3 @@
 +MKFILE_PATH        := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 +LINUXINCLUDE += -I$(MKFILE_PATH)/include 
 +obj-y   += osal_all_code.o
 \ 文件尾没有换行符
---- a/drivers/soc/axera/Makefile	2024-12-09 15:05:24.974888043 +0800
-+++ b/drivers/soc/axera/Makefile	2024-12-09 15:05:11.282647558 +0800
+--- a/linux-4.19.125/drivers/soc/axera/Makefile	2024-12-09 15:05:24.974888043 +0800
++++ b/linux-4.19.125/drivers/soc/axera/Makefile	2024-12-09 15:05:11.282647558 +0800
 @@ -12,8 +12,8 @@
  obj-$(CONFIG_AXERA_SYS_MAP)           += sysmap/
  obj-$(CONFIG_AX_GZIPD)                += gzipd/
