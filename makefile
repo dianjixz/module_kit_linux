@@ -15,9 +15,9 @@ LINUX_TAR_URL := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.gi
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
 ifeq ($(strip $(M)),)
-KERNEL_MAKE := $(MAKE) -C $(SRC_DIR)
+KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc
 else
-KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(PWD)
+KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(PWD) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc
 endif
 
 %:
