@@ -1,5 +1,5 @@
---- a/include/dt-bindings/memory/AX620E_reserve_mem_define.h	2025-03-26 16:03:03.845524929 +0800
-+++ b/include/dt-bindings/memory/AX620E_reserve_mem_define.h	2025-03-26 16:03:00.821524947 +0800
+--- a/linux-4.19.125/include/dt-bindings/memory/AX620E_reserve_mem_define.h	2025-03-26 16:03:03.845524929 +0800
++++ b/linux-4.19.125/include/dt-bindings/memory/AX620E_reserve_mem_define.h	2025-03-26 16:03:00.821524947 +0800
 @@ -2,18 +2,19 @@
  #define __DTS_AX620E_RESERVE_MEM_DEFINE_H
  

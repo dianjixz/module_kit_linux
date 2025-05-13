@@ -1,5 +1,5 @@
---- a/drivers/soc/axera/pinmux/AX620Q_DEMO_pinmux.h	2024-12-04 14:27:27.385656487 +0800
-+++ b/drivers/soc/axera/pinmux/AX620Q_DEMO_pinmux.h	2024-12-04 14:28:02.086412122 +0800
+--- a/linux-4.19.125/drivers/soc/axera/pinmux/AX620Q_DEMO_pinmux.h	2024-12-04 14:27:27.385656487 +0800
++++ b/linux-4.19.125/drivers/soc/axera/pinmux/AX620Q_DEMO_pinmux.h	2024-12-04 14:28:02.086412122 +0800
 @@ -0,0 +1,81 @@
 +0x0230000C, 0x00040003,  /* PadName = VI_D0                Fuction = I2S0_DIN0 */
 +0x02300018, 0x00040003,  /* PadName = VI_D1                Fuction = I2S0_SCLK */
@@ -83,8 +83,8 @@
 +0x02303084, 0x00000000,  /* PadName = CDRX_L5N             Fuction = CDRX_L5N */
 +0x02303090, 0x00000000,  /* PadName = CDRX_L5P             Fuction = CDRX_L5P */
 \ 文件尾没有换行符
---- a/drivers/soc/axera/pinmux/AX620Q_EVB_pinmux.h	2024-12-04 14:31:12.138512353 +0800
-+++ b/drivers/soc/axera/pinmux/AX620Q_EVB_pinmux.h	2024-12-04 14:31:07.018402626 +0800
+--- a/linux-4.19.125/drivers/soc/axera/pinmux/AX620Q_EVB_pinmux.h	2024-12-04 14:31:12.138512353 +0800
++++ b/linux-4.19.125/drivers/soc/axera/pinmux/AX620Q_EVB_pinmux.h	2024-12-04 14:31:07.018402626 +0800
 @@ -0,0 +1,81 @@
 +0x0230000C, 0x00040003,  /* PadName = VI_D0                Fuction = I2S0_DIN0 */
 +0x02300018, 0x00040003,  /* PadName = VI_D1                Fuction = I2S0_SCLK */
@@ -168,8 +168,8 @@
 +0x02303084, 0x00000000,  /* PadName = CDRX_L5N             Fuction = CDRX_L5N */
 +0x02303090, 0x00000000,  /* PadName = CDRX_L5P             Fuction = CDRX_L5P */
 \ 文件尾没有换行符
---- a/drivers/soc/axera/pinmux/AX630C_EVB_pinmux.h	2024-12-04 14:32:02.015579437 +0800
-+++ b/drivers/soc/axera/pinmux/AX630C_EVB_pinmux.h	2024-12-04 14:31:56.935470897 +0800
+--- a/linux-4.19.125/drivers/soc/axera/pinmux/AX630C_EVB_pinmux.h	2024-12-04 14:32:02.015579437 +0800
++++ b/linux-4.19.125/drivers/soc/axera/pinmux/AX630C_EVB_pinmux.h	2024-12-04 14:31:56.935470897 +0800
 @@ -0,0 +1,111 @@
 +0x0230000C, 0x00060083,  /* PadName = VI_D0                Fuction = GPIO0_A0 */
 +0x02300018, 0x00060083,  /* PadName = VI_D1                Fuction = GPIO0_A1 */
@@ -283,8 +283,8 @@
 +0x02303084, 0x00000000,  /* PadName = CDRX_L5N             Fuction = CDRX_L5N */
 +0x02303090, 0x00000000,  /* PadName = CDRX_L5P             Fuction = CDRX_L5P */
 \ 文件尾没有换行符
---- a/drivers/soc/axera/pinmux/AX630C_DEMO_pinmux.h	2024-12-04 14:33:35.217565404 +0800
-+++ b/drivers/soc/axera/pinmux/AX630C_DEMO_pinmux.h	2024-12-04 14:32:42.128435377 +0800
+--- a/linux-4.19.125/drivers/soc/axera/pinmux/AX630C_DEMO_pinmux.h	2024-12-04 14:33:35.217565404 +0800
++++ b/linux-4.19.125/drivers/soc/axera/pinmux/AX630C_DEMO_pinmux.h	2024-12-04 14:32:42.128435377 +0800
 @@ -0,0 +1,111 @@
 +0x0230000C, 0x00060083,  /* PadName = VI_D0                Fuction = GPIO0_A0 */
 +0x02300018, 0x00060083,  /* PadName = VI_D1                Fuction = GPIO0_A1 */

@@ -1,5 +1,5 @@
---- a/drivers/input/touchscreen/goodix.c	2024-12-13 17:35:07.644843096 +0800
-+++ b/drivers/input/touchscreen/goodix.c	2024-12-13 17:35:04.300779838 +0800
+--- a/linux-4.19.125/drivers/input/touchscreen/goodix.c	2024-12-13 17:35:07.644843096 +0800
++++ b/linux-4.19.125/drivers/input/touchscreen/goodix.c	2024-12-13 17:35:04.300779838 +0800
 @@ -551,6 +551,7 @@
  	}
  

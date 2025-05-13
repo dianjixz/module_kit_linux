@@ -72,7 +72,7 @@ build/check_patch.tmp:$(PATCHES)
 	@[ -d 'build/linux-4.19.125/arch/arm64/boot/dts/axera' ] || {\
 		for patch in $^; do \
 			echo "Applying $$patch..."; \
-			patch -p1 -d $(SRC_DIR) <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
+			patch -p1 -d build <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
 		done ; \
 	}
 	@rm -f build/check_patch.tmp

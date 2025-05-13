@@ -8,8 +8,8 @@ Date:   Mon Sep 2 11:42:13 2024 +0800
 
 diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.c b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.c
 index 982ae564a8..d1125ac9fe 100644
---- a/drivers/gpu/drm/axera/ax_drm_plane.c
-+++ b/drivers/gpu/drm/axera/ax_drm_plane.c
+--- a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.c
++++ b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.c
 @@ -31,6 +31,8 @@
  #define AX_FB_GET_COLOERKEY_VAL_HIGH(val)	(((val) >> 30) & 0x3FFFFFFF)
  #define AX_FB_GET_COLOERKEY_EN(val)		(((val) >> 60) & 0x1)
@@ -51,8 +51,8 @@ index 982ae564a8..d1125ac9fe 100644
  		ax_plane->props.crtc_x_offs = drm_property_create_range(drm_dev, DRM_MODE_PROP_ATOMIC, "CRTC_X_OFFS", 0, (u32)2048);
 diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.h b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.h
 index 462c06039b..c104afb1ec 100644
---- a/drivers/gpu/drm/axera/ax_drm_plane.h
-+++ b/drivers/gpu/drm/axera/ax_drm_plane.h
+--- a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.h
++++ b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_plane.h
 @@ -21,9 +21,11 @@ struct ax_plane {
  		struct drm_property *blk_id_c;
  		struct drm_property *phy_addr_y;
@@ -67,8 +67,8 @@ index 462c06039b..c104afb1ec 100644
  	struct ax_fb fb;
 diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.c b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.c
 index 1dc2a65cbe..96c42a6319 100644
---- a/drivers/gpu/drm/axera/ax_drm_vfb.c
-+++ b/drivers/gpu/drm/axera/ax_drm_vfb.c
+--- a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.c
++++ b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.c
 @@ -221,6 +221,7 @@
  	struct axfb_cursor_pos hot;
  	struct axfb_cursor_res res;
@@ -101,8 +101,8 @@ index 1dc2a65cbe..96c42a6319 100644
  	}
 diff --git a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h
 index 70e0ca08e4..b3cf724771 100644
---- a/drivers/gpu/drm/axera/ax_drm_vfb.h
-+++ b/drivers/gpu/drm/axera/ax_drm_vfb.h
+--- a/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h
++++ b/linux-4.19.125/drivers/gpu/drm/axera/ax_drm_vfb.h
 @@ -33,6 +33,11 @@ struct axfb_colorkey {
      u32 key_high;
  };
@@ -125,8 +125,8 @@ index 70e0ca08e4..b3cf724771 100644
  #endif /* __AX_DRM_VFB_H */
 diff --git a/linux-4.19.125/include/linux/ax_display_hal.h b/linux-4.19.125/include/linux/ax_display_hal.h
 index da81c15bd1..bb075e8bb9 100644
---- a/include/linux/ax_display_hal.h
-+++ b/include/linux/ax_display_hal.h
+--- a/linux-4.19.125/include/linux/ax_display_hal.h
++++ b/linux-4.19.125/include/linux/ax_display_hal.h
 @@ -77,6 +77,13 @@
  };
  
@@ -167,8 +167,8 @@ index da81c15bd1..bb075e8bb9 100644
  #define DISP_GAMMA_SIZE			(33 * 33)
 diff --git a/linux-4.19.125/include/linux/ax_vfb.h b/linux-4.19.125/include/linux/ax_vfb.h
 index 268d6d71b4..73fb2ca618 100644
---- a/include/linux/ax_vfb.h
-+++ b/include/linux/ax_vfb.h
+--- a/linux-4.19.125/include/linux/ax_vfb.h
++++ b/linux-4.19.125/include/linux/ax_vfb.h
 @@ -33,6 +33,11 @@ struct ax_fb_device {
  		u64 enable	: 1; /* [60] */
  		u64 inv		: 1; /* [61] */
