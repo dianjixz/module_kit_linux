@@ -11,6 +11,9 @@ LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e
 LINUX_TAR_NAME := $(LINUX_TAR_SHA)-linux-4.19.125.tar.gz
 LINUX_TAR_URL := https://mirror.tuna.tsinghua.edu.cn/kernel/v4.x/linux-4.19.125.tar.gz
 
+PROJECT = AX630C_emmc_arm64_k419
+LIBC = glibc
+
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
@@ -23,7 +26,7 @@ endif
 %:
 	@ if [ "$(MAKECMDGOALS)" != "build_init" ] ; then \
 		$(MAKE) build_init ; \
-		$(KERNEL_MAKE)  $(MAKECMDGOALS) ; \
+		$(KERNEL_MAKE)  $(MAKECMDGOALS) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc; \
 	fi
 
 build_init:Configuring
