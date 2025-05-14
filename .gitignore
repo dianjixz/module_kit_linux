@@ -6,3 +6,6 @@ include
 boot_signed.bin
 AX630C_emmc_arm64_k*_signed.dtb
 *linux-*.tar.gz
+osal
+osdrv
+BSP
