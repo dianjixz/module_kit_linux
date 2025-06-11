@@ -1,0 +1,49 @@
+--- a/linux-4.19.125/drivers/gpu/drm/axera/ax_dsi_dphy.c	2025-06-11 16:39:23.245616984 +0800
++++ b/linux-4.19.125/drivers/gpu/drm/axera/ax_dsi_dphy.c	2025-06-11 16:39:19.025535510 +0800
+@@ -1968,7 +1968,7 @@
+ 
+ 	board_id = ax_info_get_board_id();
+ 
+-	if (board_id == AX630C_DEMO_LP4_V1_0 || board_id == AX630C_DEMO_V1_1 || board_id == AX620Q_LP4_DEMO_V1_1) {
++	if (board_id == AX630C_DEMO_LP4_V1_0 || board_id == AX630C_DEMO_LP4_V1_1 || board_id == AX630C_DEMO_V1_1 || board_id == AX620Q_LP4_DEMO_V1_1) {
+ 		writel(1, dphy->regs + DPHY_TX0_REG22_ADDR);
+ 		writel(0, dphy->regs + DPHY_TX0_REG23_ADDR);
+ 		writel(4, dphy->regs + DPHY_TX0_REG24_ADDR);
+--- a/linux-4.19.125/include/linux/soc/axera/ax_boardinfo.h	2025-06-11 16:47:05.466553973 +0800
++++ b/linux-4.19.125/include/linux/soc/axera/ax_boardinfo.h	2025-06-11 16:47:05.482554283 +0800
+@@ -14,6 +14,7 @@
+ 	PHY_AX630C_SLT_V1_0 = 8,
+ 	PHY_AX630C_DEMO_V1_1 = 6,
+ 	PHY_AX630C_DEMO_LP4_V1_0 = 12,
++	PHY_AX630C_DEMO_LP4_V1_1 = 14,
+ } ax630c_board_type_e;
+ 
+ typedef enum ax620q_board_type {
+@@ -37,6 +38,7 @@
+ 	AX630C_DEMO_LP4_V1_0,
+ 	AX620Q_LP4_38BOARD_V1_0,
+ 	AX620Q_LP4_MINION_BOARD,
++	AX630C_DEMO_LP4_V1_1,
+ 	AX620E_BOARD_MAX,
+ } board_type_e;
+ 
+--- a/linux-4.19.125/drivers/soc/axera/pinmux/ax_pinmux.c	2025-06-11 16:50:28.530482243 +0800
++++ b/linux-4.19.125/drivers/soc/axera/pinmux/ax_pinmux.c	2025-06-11 16:50:28.550482630 +0800
+@@ -61,6 +61,7 @@
+ 
+ 	switch (index) {
+ 	case AX630C_DEMO_LP4_V1_0:
++	case AX630C_DEMO_LP4_V1_1:
+ 		/* fall through */
+ 	case AX630C_DEMO_V1_1:
+ 		ret = AX630C_DEMO_V1_0;
+--- a/linux-4.19.125/drivers/soc/axera/ax_hwinfo/ax_hwinfo.c	2025-06-11 16:50:28.526482166 +0800
++++ b/linux-4.19.125/drivers/soc/axera/ax_hwinfo/ax_hwinfo.c	2025-06-11 16:50:28.550482630 +0800
+@@ -50,6 +50,7 @@
+ 	[AX630C_CHIP][PHY_AX630C_SLT_V1_0] = "AX630C_SLT_V1_0",
+ 	[AX630C_CHIP][PHY_AX630C_DEMO_V1_1] = "AX630C_DEMO_V1_1",
+ 	[AX630C_CHIP][PHY_AX630C_DEMO_LP4_V1_0] = "AX630C_DEMO_LP4_V1_0",
++	[AX630C_CHIP][PHY_AX630C_DEMO_LP4_V1_1] = "AX630C_DEMO_LP4_V1_1",
+ };
+ 
+ static int ax_get_uid(void)
