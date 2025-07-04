@@ -123,7 +123,7 @@
 		logstate = /bits/ 8 <1 1>;
 		loglevel = /bits/ 8 <4 4>;
 	};
-	leds {
+	leds0 {
 		// pinctrl-names = "default";
 		// pinctrl-0 = <&leds_pins>;
 		compatible = "gpio-leds";
@@ -138,7 +138,13 @@
 			default-state = "on";
 			linux,default-trigger = "heartbeat";
 		};
-		led2 {
+	};
+	
+	leds1 {
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&leds_pins>;
+		compatible = "gpio-leds";
+		led0 {
 			label = "sys_led";
 			gpios = <&pi4ioe5v6408 4 0>;
 			default-state = "on";
@@ -149,8 +155,8 @@
 	vfb0: vfb@0 {
 		compatible = "axera,vfb";
 		id = <0>;
-		width = <720>;
-		height = <1280>;
+		width = <1280>;
+		height = <720>;
 		bpp = <32>;
 		buf-num = <2>;
 		status = "okay";
@@ -159,8 +165,8 @@
 	vfb1: vfb@1 {
 		compatible = "axera,vfb";
 		id = <1>;
-		width = <720>;
-		height = <1280>;
+		width = <1280>;
+		height = <720>;
 		bpp = <32>;
 		buf-num = <2>;
 		status = "okay";
@@ -426,7 +432,7 @@
 	status = "okay";
 	/*i2s - pad0*/
 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
-	i2s-m-aec-sclk-sel = <0>;     /*21*/
+	i2s-m-aec-sclk-sel = <1>;     /*21*/
 	i2s-inner-codec-en = <1>;     /*20*/
 	i2s-exter-codec-en = <0>;     /*19*/
 	i2s-m-exter-codec-en = <0>;   /*18*/
@@ -448,7 +454,7 @@
 	status = "okay";
 	/*i2s - pad0*/
 	i2s-m-aec-cycle-sel = <0>;    /*23-22*/
-	i2s-m-aec-sclk-sel = <0>;     /*21*/
+	i2s-m-aec-sclk-sel = <1>;     /*21*/
 	i2s-inner-codec-en = <1>;     /*20*/
 	i2s-exter-codec-en = <0>;     /*19*/
 	i2s-m-exter-codec-en = <0>;   /*18*/
@@ -697,7 +703,7 @@
 };
 #endif
 
-#if 1
+#if 0
 // ili9881c
 &panel_dsi {
 	prepare-delay-ms = <0>;
@@ -743,7 +749,7 @@
 };
 #endif
 
-#if 0
+#if 1
 // lt9611
 &panel_dsi {
 	prepare-delay-ms = <0>;
