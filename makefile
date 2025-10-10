@@ -14,6 +14,14 @@ LINUX_TAR_URL := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.gi
 # AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
 # KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
 
+
+SIGN_SCRIPT := axera/bin/imgsign/sec_boot_AX620E_sign.py
+BINARIES_DIR := build/linux-4.19.125/arch/arm64/boot
+PUB_KEY := axera/bin/imgsign/public.pem
+PRIV_KEY := axera/bin/imgsign/private.pem
+SIGN_PARAMS := -cap 0x54FAFE -key_bit 2048
+
+
 ifeq ($(strip $(M)),)
 KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc
 else
@@ -88,6 +96,17 @@ distclean:
 	@rm -f arch
 	@rm -f scripts
 	@rm -f include
+
+Packaxera:
+	[ -f $(BINARIES_DIR)/Image ] && axera/bin/ax_gzip -9 $(BINARIES_DIR)/Image
+	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb ] && axera/bin/ax_gzip -9 $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb
+	[ -f $(BINARIES_DIR)/Image.axgzip ] && python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/Image.axgzip \
+		-o $(BINARIES_DIR)/boot_signed.bin -pub $(PUB_KEY) -prv $(PRIV_KEY) $(SIGN_PARAMS)
+	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb.axgzip ] && python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb.axgzip \
+		-o $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb -pub $(PUB_KEY) -prv $(PRIV_KEY) $(SIGN_PARAMS)
+	[ -f $(BINARIES_DIR)/boot_signed.bin ] && cp $(BINARIES_DIR)/boot_signed.bin $(BINARIES_DIR)/boot_signed.bin.1
+	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb ] && cp $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb.1
+
 linux-distclean:
 	@$(KERNEL_MAKE) distclean
 	@rm -f build/check_config.tmp 
