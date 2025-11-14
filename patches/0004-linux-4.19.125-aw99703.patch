@@ -1,5 +1,5 @@
---- a/linux-4.19.125/drivers/video/backlight/aw99703_bl.h	2024-12-06 10:44:28.767788234 +0800
-+++ b/linux-4.19.125/drivers/video/backlight/aw99703_bl.h	2024-12-06 10:44:25.255707220 +0800
+--- a/drivers/video/backlight/aw99703_bl.h	2024-12-06 10:44:28.767788234 +0800
++++ b/drivers/video/backlight/aw99703_bl.h	2024-12-06 10:44:25.255707220 +0800
 @@ -0,0 +1,249 @@
 +#ifndef _AW99703_REG_H_
 +#define _AW99703_REG_H_
@@ -251,8 +251,8 @@
 +
 +#endif
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/video/backlight/aw99703_bl.c	2024-12-06 10:44:40.264052961 +0800
-+++ b/linux-4.19.125/drivers/video/backlight/aw99703_bl.c	2024-12-06 10:44:35.459942421 +0800
+--- a/drivers/video/backlight/aw99703_bl.c	2024-12-06 10:44:40.264052961 +0800
++++ b/drivers/video/backlight/aw99703_bl.c	2024-12-06 10:44:35.459942421 +0800
 @@ -0,0 +1,854 @@
 +/*
 +* aw99703.c   aw99703 backlight module
@@ -1109,16 +1109,16 @@
 +MODULE_DESCRIPTION("Back Light driver for aw99703");
 +MODULE_LICENSE("GPL v2");
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/video/backlight/Makefile	2024-12-06 10:44:15.599484136 +0800
-+++ b/linux-4.19.125/drivers/video/backlight/Makefile	2024-12-06 10:44:12.275407226 +0800
+--- a/drivers/video/backlight/Makefile	2024-12-06 10:44:15.599484136 +0800
++++ b/drivers/video/backlight/Makefile	2024-12-06 10:44:12.275407226 +0800
 @@ -59,3 +59,5 @@
  obj-$(CONFIG_BACKLIGHT_WM831X)		+= wm831x_bl.o
  obj-$(CONFIG_BACKLIGHT_ARCXCNN) 	+= arcxcnn_bl.o
  obj-$(CONFIG_BACKLIGHT_RAVE_SP)		+= rave-sp-backlight.o
 +
 +obj-$(CONFIG_BACKLIGHT_AW99703)		+= aw99703_bl.o
---- a/linux-4.19.125/drivers/video/backlight/Kconfig	2024-12-06 10:44:08.051309402 +0800
-+++ b/linux-4.19.125/drivers/video/backlight/Kconfig	2024-12-06 10:44:04.735232536 +0800
+--- a/drivers/video/backlight/Kconfig	2024-12-06 10:44:08.051309402 +0800
++++ b/drivers/video/backlight/Kconfig	2024-12-06 10:44:04.735232536 +0800
 @@ -480,6 +480,15 @@
  	help
  	  Support for backlight control on RAVE SP device.

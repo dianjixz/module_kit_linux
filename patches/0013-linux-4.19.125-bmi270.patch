@@ -1,5 +1,5 @@
---- a/linux-4.19.125/drivers/iio/imu/Makefile	2025-01-10 16:41:09.666820037 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/Makefile	2025-01-10 16:39:59.370820460 +0800
+--- a/drivers/iio/imu/Makefile	2025-01-10 16:41:09.666820037 +0800
++++ b/drivers/iio/imu/Makefile	2025-01-10 16:39:59.370820460 +0800
 @@ -15,6 +15,7 @@
  obj-$(CONFIG_IIO_ADIS_LIB) += adis_lib.o
  
@@ -8,8 +8,8 @@
  obj-y += inv_mpu6050/
  
  obj-$(CONFIG_KMX61) += kmx61.o
---- a/linux-4.19.125/drivers/iio/imu/Kconfig	2025-01-10 16:41:06.150820058 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/Kconfig	2025-01-10 16:39:57.742820470 +0800
+--- a/drivers/iio/imu/Kconfig	2025-01-10 16:41:06.150820058 +0800
++++ b/drivers/iio/imu/Kconfig	2025-01-10 16:39:57.742820470 +0800
 @@ -26,6 +26,7 @@
  	  ADIS16485, ADIS16488 inertial sensors.
  
@@ -18,8 +18,8 @@
  
  config KMX61
  	tristate "Kionix KMX61 6-axis accelerometer and magnetometer"
---- a/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_core.c	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_core.c	2025-01-10 16:39:11.618820747 +0800
+--- a/drivers/iio/imu/bmi270/bmi270_core.c	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/bmi270_core.c	2025-01-10 16:39:11.618820747 +0800
 @@ -0,0 +1,799 @@
 +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +
@@ -821,8 +821,8 @@
 +MODULE_DESCRIPTION("BMI270 driver");
 +MODULE_LICENSE("GPL");
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/iio/imu/bmi270/bmi270.h	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/bmi270.h	2025-01-10 16:31:23.810823559 +0800
+--- a/drivers/iio/imu/bmi270/bmi270.h	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/bmi270.h	2025-01-10 16:31:23.810823559 +0800
 @@ -0,0 +1,41 @@
 +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 +
@@ -866,8 +866,8 @@
 +
 +#endif  /* BMI270_H_ */
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_i2c.c	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_i2c.c	2025-01-10 16:39:17.670820711 +0800
+--- a/drivers/iio/imu/bmi270/bmi270_i2c.c	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/bmi270_i2c.c	2025-01-10 16:39:17.670820711 +0800
 @@ -0,0 +1,71 @@
 +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +
@@ -941,8 +941,8 @@
 +MODULE_LICENSE("GPL");
 +// MODULE_IMPORT_NS(IIO_BMI270);
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_spi.c	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/bmi270_spi.c	2025-01-10 16:39:28.174820647 +0800
+--- a/drivers/iio/imu/bmi270/bmi270_spi.c	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/bmi270_spi.c	2025-01-10 16:39:28.174820647 +0800
 @@ -0,0 +1,96 @@
 +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +
@@ -1041,8 +1041,8 @@
 +MODULE_LICENSE("GPL");
 +// MODULE_IMPORT_NS(IIO_BMI270);
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/iio/imu/bmi270/Kconfig	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/Kconfig	2025-01-10 15:57:09.834835908 +0800
+--- a/drivers/iio/imu/bmi270/Kconfig	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/Kconfig	2025-01-10 15:57:09.834835908 +0800
 @@ -0,0 +1,33 @@
 +# SPDX-License-Identifier: GPL-2.0
 +#
@@ -1078,8 +1078,8 @@
 +	  This driver can also be built as a module. If so, the module will be
 +	  called bmi270_spi.
 \ 文件尾没有换行符
---- a/linux-4.19.125/drivers/iio/imu/bmi270/Makefile	2025-01-10 16:44:30.550818829 +0800
-+++ b/linux-4.19.125/drivers/iio/imu/bmi270/Makefile	2025-01-10 15:57:27.966835799 +0800
+--- a/drivers/iio/imu/bmi270/Makefile	2025-01-10 16:44:30.550818829 +0800
++++ b/drivers/iio/imu/bmi270/Makefile	2025-01-10 15:57:27.966835799 +0800
 @@ -0,0 +1,7 @@
 +# SPDX-License-Identifier: GPL-2.0
 +#

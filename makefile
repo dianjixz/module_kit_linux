@@ -1,112 +1,161 @@
 # SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-#
 # SPDX-License-Identifier: MIT
-SDK_VERSION := V2.0.0_P7_20240513101106
-PATCH_DIR := patches
-SRC_DIR := build/linux-4.19.125
-PATCHES := $(wildcard patches/*.patch)
-DTSS := $(wildcard linux-dts/*.dts*)
-CONFIG_FILES := $(wildcard *.config)
-LINUX_TAR_SHA := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
-LINUX_TAR_NAME := $(LINUX_TAR_SHA)-linux-4.19.125.tar.gz
-LINUX_TAR_URL := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.19.125.tar.gz
 
-# AX630C_KERNEL_PARAM := ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu-
-# KERNEL_MAKE := cd $(SRC_DIR) ; $(MAKE) $(AX630C_KERNEL_PARAM)
+# ============================================================================
+# 配置区域 - 根据需求修改此部分
+# ============================================================================
+THIS_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+# ----------------------------------------------------------------------------
+# Linux 内核版本配置
+# ----------------------------------------------------------------------------
+LINUX_VERSION       := 4.19.125
+LINUX_TAR_SHA       := 839708f2798d71fde9f2fe6144b703a1641d215d9e463be2d57be9000151d3e1
+
+# 内核源码下载 URL（可选其他镜像）
+# - https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$(LINUX_VERSION).tar.gz
+# - https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-$(LINUX_VERSION).tar.gz
+LINUX_TAR_URL       := https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-$(LINUX_VERSION).tar.gz
+
+# ----------------------------------------------------------------------------
+# 板级配置
+# ----------------------------------------------------------------------------
+BOARD_NAME          := m5stack_AX630C
+BOARD_ARCH          := arm64
+BASE_DEFCONFIG      := axera_AX630C_emmc_arm64_k419_defconfig
+TARGET_DEFCONFIG    := $(BOARD_NAME)_emmc_$(BOARD_ARCH)_k419_defconfig
+
+# ----------------------------------------------------------------------------
+# 目录配置
+# ----------------------------------------------------------------------------
+PATCH_DIR           := patches
+DTS_DIR             := linux-dts
+CONFIG_DIR          := defconfigs
 
 
-SIGN_SCRIPT := axera/bin/imgsign/sec_boot_AX620E_sign.py
-BINARIES_DIR := build/linux-4.19.125/arch/arm64/boot
-PUB_KEY := axera/bin/imgsign/public.pem
-PRIV_KEY := axera/bin/imgsign/private.pem
+# ----------------------------------------------------------------------------
+# 下载目录配置
+# ----------------------------------------------------------------------------
+# 外部下载目录路径
+DOWNLOAD_DIR        := $(THIS_DIR)/../../../dl
+
+# ----------------------------------------------------------------------------
+# 交叉编译配置（如需要请取消注释）
+# ----------------------------------------------------------------------------
+# ARCH              := arm64
+# CROSS_COMPILE     := aarch64-none-linux-gnu-
+# KERNEL_EXTRA_PARAMS := ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
+
+# ============================================================================
+# 内部变量 - 通常不需要修改
+# ============================================================================
+# 确定下载目录
+
+DL_DIR := .
+ifneq ($(wildcard $(DOWNLOAD_DIR)),)
+	DL_DIR := $(DOWNLOAD_DIR)
+endif
+
+# 目录和文件定义
+BUILD_DIR           := build
+SRC_DIR             := $(BUILD_DIR)/linux-$(LINUX_VERSION)
+LINUX_TAR_NAME      := $(LINUX_TAR_SHA)-linux-$(LINUX_VERSION).tar.gz
+LINUX_TAR			:= $(DL_DIR)/.$(LINUX_TAR_NAME)
+
+# 收集源文件
+PATCHES             := $(sort $(wildcard $(PATCH_DIR)/*.patch))
+DTSS                := $(wildcard $(DTS_DIR)/*.dts*) $(wildcard $(DTS_DIR)/*.h)
+CONFIG_FILES        := $(wildcard $(CONFIG_DIR)/*.config)
+SYMLINK_DIRS      	:= arch scripts include
+
+
+
+
+# 内核编译命令
+KERNEL_MAKE := +$(MAKE) -C $(SRC_DIR) PWD=$(PWD) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc $(KERNEL_EXTRA_PARAMS)
+ifneq ($(strip $(M)),)
+	KERNEL_MAKE := $(KERNEL_MAKE) M=$(M)
+endif
+
+# ============================================================================
+# 主要目标
+# ============================================================================
+
+SIGN_EXTS := all vmlinux Image zImage bzImage uImage  modules modules_install modules_prepare config menuconfig  defconfig  oldconfig savedefconfig clean mrproper install tar-pkg rpm-pkg deb-pkg kernelrelease %_defconfig %.dtb dtbs
+
+define SIGN_RULE
+$(1): _build_init
+	$(KERNEL_MAKE) $(MAKECMDGOALS)
+endef
+
+$(foreach ext,$(SIGN_EXTS),$(eval $(call SIGN_RULE,$(ext))))
+
+
+# ============================================================================
+# 构建流程
+# ============================================================================
+
+# 构建初始化总入口
+_build_init: Patching Extracting
+
+# 构建流程依赖链
+
+Patching: $(BUILD_DIR)/.stamp_patching $(BUILD_DIR)/.stamp_dtsing $(BUILD_DIR)/.stamp_config
+
+Extracting: $(BUILD_DIR)/.stamp_extract
+
+# ============================================================================
+# 内部辅助目标（不直接调用）
+# ============================================================================
+
+$(BUILD_DIR)/.stamp_config : $(CONFIG_FILES) $(BUILD_DIR)/.stamp_patching
+	cat $(SRC_DIR)/arch/$(BOARD_ARCH)/configs/$(BASE_DEFCONFIG)	$(CONFIG_FILES) > $(SRC_DIR)/arch/$(BOARD_ARCH)/configs/$(TARGET_DEFCONFIG) && touch $@
+
+$(BUILD_DIR)/.stamp_patching : $(PATCHES) $(BUILD_DIR)/.stamp_extract
+	for p in $(PATCHES); do patch -p1 -d $(SRC_DIR) < $$p; done && touch $@
+
+$(BUILD_DIR)/.stamp_dtsing : $(DTSS) $(BUILD_DIR)/.stamp_extract
+	cp $(DTSS) $(SRC_DIR)/arch/$(BOARD_ARCH)/boot/dts/ && touch $@
+
+
+
+$(BUILD_DIR)/.stamp_extract : $(LINUX_TAR)
+	mkdir -p $(BUILD_DIR)
+	tar zxf $(LINUX_TAR) -C $(BUILD_DIR) && { for d in $(SYMLINK_DIRS); do ln -sf $(SRC_DIR)/$$d $$d; done } && touch $@
+	 
+
+$(LINUX_TAR) : README.md
+	@if [ ! -f "$(LINUX_TAR)" ]; then \
+		wget --passive-ftp -nd -t 3 -O '$(LINUX_TAR)' '$(LINUX_TAR_URL)' || rm -f '$(LINUX_TAR)'; \
+	else \
+		touch '$(LINUX_TAR)'; \
+	fi
+
+
+
+
+
+
+
+AXERA_TOOL_DIR := axerabin/tools/bin
+SIGN_SCRIPT := $(AXERA_TOOL_DIR)/imgsign/sec_boot_AX620E_sign.py
+BINARIES_DIR := $(SRC_DIR)/arch/arm64/boot
+PUB_KEY := $(AXERA_TOOL_DIR)/imgsign/public.pem
+PRIV_KEY := $(AXERA_TOOL_DIR)/imgsign/private.pem
 SIGN_PARAMS := -cap 0x54FAFE -key_bit 2048
 
 
-ifeq ($(strip $(M)),)
-KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc
-else
-KERNEL_MAKE := $(MAKE) -C $(SRC_DIR) PWD=$(PWD) PROJECT=AX630C_emmc_arm64_k419 LIBC=glibc
-endif
-
-%:
-	@ if [ "$(MAKECMDGOALS)" != "build_init" ] ; then \
-		$(MAKE) build_init ; \
-		$(KERNEL_MAKE)  $(MAKECMDGOALS) ; \
-	fi
-
-build_init:Configuring
-
-Extracting:
-	$(MAKE) build/check_build.tmp
-	$(MAKE) build/check_dts.tmp
-
-Patching:Extracting 
-	$(MAKE) build/check_patch.tmp
-
-Configuring:Patching 
-	$(MAKE) build/check_config.tmp  
-
-build/check_build.tmp:$(PATCHES)
-	[ -d 'build' ] || mkdir build
-	@if [ -f '.stamp_extracted' ] ; then \
-		[ -f '../../../dl/$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '../../../dl/$(LINUX_TAR_NAME)' '$(LINUX_TAR_URL)' ; \
-		calculated_hash=$$(sha256sum ../../../dl/$(LINUX_TAR_NAME) | awk '{ print $$1 }'); \
-		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
-			rm ../../../dl/$(LINUX_TAR_NAME) ; \
-			exit 1; \
-		fi ; \
-		[ -d 'build/linux-4.19.125' ] || tar zxf ../../../dl/$(LINUX_TAR_NAME) -C build/ ; \
-	else \
-		[ -f '.$(LINUX_TAR_NAME)' ] || wget --passive-ftp -nd -t 3 -O '.$(LINUX_TAR_NAME)' '$(LINUX_TAR_URL)' ; \
-		calculated_hash=$$(sha256sum .$(LINUX_TAR_NAME) | awk '{ print $$1 }'); \
-		if [ "$$calculated_hash" != "$(LINUX_TAR_SHA)" ]; then \
-			rm .$(LINUX_TAR_NAME) ; \
-			exit 1; \
-		fi ; \
-		[ -d 'build/linux-4.19.125' ] || tar zxf .$(LINUX_TAR_NAME) -C build/ ; \
-	fi
-	@[ -L 'arch' ] || ln -s $(SRC_DIR)/arch arch
-	@[ -L 'scripts' ] || ln -s $(SRC_DIR)/scripts scripts
-	@[ -L 'include' ] || ln -s $(SRC_DIR)/scripts include
-	@rm -f build/check_build.tmp
-	@touch build/check_build.tmp
-
-build/check_dts.tmp:$(DTSS)
-	@cp linux-dts/* $(SRC_DIR)/arch/arm64/boot/dts/
-	@rm -f build/check_dts.tmp
-	@touch build/check_dts.tmp
-
-build/check_patch.tmp:$(PATCHES)
-	@[ -d 'build/linux-4.19.125/arch/arm64/boot/dts/axera' ] || {\
-		for patch in $^; do \
-			echo "Applying $$patch..."; \
-			patch -p1 -d build <$$patch || { echo "Failed to apply $$patch"; exit 1; } \
-		done ; \
-	}
-	@rm -f build/check_patch.tmp
-	@touch build/check_patch.tmp
-
-build/check_config.tmp:$(CONFIG_FILES)
-	@[ -f '$(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig' ] || { cat $(SRC_DIR)/arch/arm64/configs/axera_AX630C_emmc_arm64_k419_defconfig fragment-03-systemd.config linux-disable.config linux-enable-m5stack.config > $(SRC_DIR)/arch/arm64/configs/m5stack_AX630C_emmc_arm64_k419_defconfig ; }
-	@rm -f build/check_config.tmp
-	@touch build/check_config.tmp
-
-distclean:
-	@rm -f build -rf
-	@rm -f arch
-	@rm -f scripts
-	@rm -f include
-
-Packaxera:
-	[ -f $(BINARIES_DIR)/Image ] && axera/bin/ax_gzip -9 $(BINARIES_DIR)/Image
-	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb ] && axera/bin/ax_gzip -9 $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb
-	[ -f $(BINARIES_DIR)/Image.axgzip ] && python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/Image.axgzip \
+Packaxera: 
+	$(AXERA_TOOL_DIR)/ax_gzip -9 $(BINARIES_DIR)/Image
+	python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/Image.axgzip \
 		-o $(BINARIES_DIR)/boot_signed.bin -pub $(PUB_KEY) -prv $(PRIV_KEY) $(SIGN_PARAMS)
-	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb.axgzip ] && python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419.dtb.axgzip \
+
+	$(AXERA_TOOL_DIR)/ax_gzip -9 $(BINARIES_DIR)/dts/m5stack-ax630c-lite.dtb
+	python3 $(SIGN_SCRIPT) -i $(BINARIES_DIR)/dts/m5stack-ax630c-lite.dtb.axgzip \
 		-o $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb -pub $(PUB_KEY) -prv $(PRIV_KEY) $(SIGN_PARAMS)
-	[ -f $(BINARIES_DIR)/boot_signed.bin ] && cp $(BINARIES_DIR)/boot_signed.bin $(BINARIES_DIR)/boot_signed.bin.1
-	[ -f $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb ] && cp $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb $(BINARIES_DIR)/dts/axera/AX630C_emmc_arm64_k419_signed.dtb.1
 
 linux-distclean:
 	@$(KERNEL_MAKE) distclean
-	@rm -f build/check_config.tmp 
+
+distclean:
+	@rm -f build -rf
+	@rm -f $(SYMLINK_DIRS)

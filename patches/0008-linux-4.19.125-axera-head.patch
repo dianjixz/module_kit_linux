@@ -1,6 +1,6 @@
 diff -u -r -N include/axera/ax_base_type.h include/axera/ax_base_type.h
---- a/linux-4.19.125/include/axera/ax_base_type.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/linux-4.19.125/include/axera/ax_base_type.h	2024-12-04 16:47:38.061174872 +0800
+--- a/include/axera/ax_base_type.h	1970-01-01 08:00:00.000000000 +0800
++++ b/include/axera/ax_base_type.h	2024-12-04 16:47:38.061174872 +0800
 @@ -0,0 +1,45 @@
 +/**************************************************************************************************
 + *
@@ -48,8 +48,8 @@ diff -u -r -N include/axera/ax_base_type.h include/axera/ax_base_type.h
 +
 +#endif //_AX_BASE_TYPE_H_
 diff -u -r -N include/axera/ax_global_type.h include/axera/ax_global_type.h
---- a/linux-4.19.125/include/axera/ax_global_type.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/linux-4.19.125/include/axera/ax_global_type.h	2024-12-04 16:47:38.061174872 +0800
+--- a/include/axera/ax_global_type.h	1970-01-01 08:00:00.000000000 +0800
++++ b/include/axera/ax_global_type.h	2024-12-04 16:47:38.061174872 +0800
 @@ -0,0 +1,642 @@
 +/**************************************************************************************************
 + *
@@ -694,8 +694,8 @@ diff -u -r -N include/axera/ax_global_type.h include/axera/ax_global_type.h
 +
 +#endif //_AX_GLOBAL_TYPE_H_
 diff -u -r -N include/axera/ax_gzipd_api.h include/axera/ax_gzipd_api.h
---- a/linux-4.19.125/include/axera/ax_gzipd_api.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/linux-4.19.125/include/axera/ax_gzipd_api.h	2024-12-04 16:47:38.061174872 +0800
+--- a/include/axera/ax_gzipd_api.h	1970-01-01 08:00:00.000000000 +0800
++++ b/include/axera/ax_gzipd_api.h	2024-12-04 16:47:38.061174872 +0800
 @@ -0,0 +1,80 @@
 +/**************************************************************************************************
 + *
